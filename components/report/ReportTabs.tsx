@@ -1,6 +1,6 @@
 "use client";
 
-import type { Tab } from "./types";
+import type { Tab } from "../../lib/types";
 
 const tabs: { id: Tab; label: string }[] = [
   { id: "all", label: "All Items" },

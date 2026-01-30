@@ -7,9 +7,9 @@ import { PlusIcon, Search } from "lucide-react";
 import ItemCard from "@/components/report/ItemCard";
 import ReportTabs from "@/components/report/ReportTabs";
 import ReportTypeModal, { type ReportType } from "@/components/report/ReportTypeModal";
-import { sampleItems } from "@/components/report/sampleItems";
-import { filterItems } from "@/components/report/filterItems";
-import type { Tab } from "@/components/report/types";
+import { sampleItems } from "@/lib/sampleItems";
+import { filterItems } from "@/lib/filterItems";
+import type { Tab } from "@/lib/types";
 
 export default function ReportPage() {
   const router = useRouter();
@@ -26,8 +26,8 @@ export default function ReportPage() {
   function handleChoose(type: ReportType) {
       setIsChooserOpen(false);
 
-      if (type === "lost") router.push("/report/lost");
-      if (type === "found") router.push("/report/found");
+      if (type === "lost") router.push("/report/lost/page");
+      if (type === "found") router.push("/report/found/page");
   }
 
   return (

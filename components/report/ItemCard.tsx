@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { MapPin, Clock, Tag } from "lucide-react";
 import TagPill from "./TagPill";
-import type { Item } from "./types";
+import type { Item } from "../../lib/types";
 
 function canIdentify(item: Item) {
   return item.tags.includes("REPORTED") && !item.tags.includes("CLAIM");

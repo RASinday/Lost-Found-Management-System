@@ -1,4 +1,4 @@
-import type { Status } from "./types";
+import type { Status } from "../../lib/types";
 
 const styles: Record<Status, string> = {
   FOUND: "bg-emerald-500/90",

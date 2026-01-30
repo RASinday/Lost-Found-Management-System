@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
 
 export type ReportType = "lost" | "found";
@@ -11,7 +12,15 @@ interface Props {
 }
 
 export default function ReportTypeModal({ open, onClose, onSelect }: Props) {
+  const router = useRouter();
+
   if (!open) return null;
+
+  const handleSelect = (type: ReportType) => {
+    onSelect(type);     // keep your existing logic
+    onClose();          // close modal
+    router.push(type === "lost" ? "/report/lost" : "/report/found"); // route
+  };
 
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center px-4">
@@ -33,8 +42,9 @@ export default function ReportTypeModal({ open, onClose, onSelect }: Props) {
         <div className="mt-10 grid gap-8 md:grid-cols-2">
           {/* Lost */}
           <button
+            onClick={() => handleSelect("lost")}
             className="group flex flex-col items-center rounded-2xl bg-[#18263c] p-8 text-center ring-1 ring-white/10 transition hover:ring-white/20"
-            >
+          >
             <div className="mb-10 flex h-20 w-20 items-center justify-center rounded-2xl bg-red-500/20 ring-1 ring-red-500/40">
               <AlertCircle className="h-10 w-10 text-red-400" />
             </div>
@@ -50,8 +60,9 @@ export default function ReportTypeModal({ open, onClose, onSelect }: Props) {
 
           {/* Found */}
           <button
+            onClick={() => handleSelect("found")}
             className="group flex flex-col items-center rounded-2xl bg-[#18263c] p-8 text-center ring-1 ring-white/10 transition hover:ring-white/20"
-            >
+          >
             <div className="mb-10 flex h-20 w-20 items-center justify-center rounded-2xl bg-emerald-500/20 ring-1 ring-emerald-500/40">
               <CheckCircle2 className="h-10 w-10 text-emerald-400" />
             </div>
