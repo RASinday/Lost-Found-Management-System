@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { PlusIcon, Search } from "lucide-react";
 
@@ -10,8 +10,8 @@ import ReportTypeModal, { type ReportType } from "@/components/report/ReportType
 
 import { sampleItems } from "@/lib/sampleItems";
 import { filterItems } from "@/lib/filterItems";
-import type { Item, Tab } from "@/lib/types";
-import { loadReports } from "@/lib/reportStorage";
+import type { Tab } from "@/lib/types";
+import { useTempReports } from "@/lib/tempReportsStore";
 
 export default function ReportPage() {
   const router = useRouter();
@@ -20,26 +20,18 @@ export default function ReportPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isChooserOpen, setIsChooserOpen] = useState(false);
 
-  const [storedReports, setStoredReports] = useState<Item[]>([]);
-
-  useEffect(() => {
-    setStoredReports(loadReports());
-  }, []);
+  const { reports: filedReports } = useTempReports();
 
   const allItems = useMemo(() => {
-    return [...storedReports, ...sampleItems];
-  }, [storedReports]);
+    return [...filedReports, ...sampleItems];
+  }, [filedReports]);
 
-  const items = useMemo(
-    () => filterItems(allItems, activeTab, searchQuery),
-    [allItems, activeTab, searchQuery]
-  );
+  const items = useMemo(() => {
+    return filterItems(allItems, activeTab, searchQuery);
+  }, [allItems, activeTab, searchQuery]);
 
   function handleChoose(type: ReportType) {
     setIsChooserOpen(false);
-
-    // Use the correct routes for your project:
-    // Most Next.js apps use "/report/lost" and "/report/found"
     if (type === "lost") router.push("/report/lost");
     if (type === "found") router.push("/report/found");
   }
@@ -65,7 +57,7 @@ export default function ReportPage() {
             onClick={() => setIsChooserOpen(true)}
             className="shrink-0 rounded-xl bg-orange-500 px-6 py-3 text-[20px] font-semibold hover:bg-orange-400"
           >
-            <PlusIcon className="inline-block mr-1 h-10 w-10" />
+            <PlusIcon className="mr-2 inline-block h-10 w-10" />
             File a Report
           </button>
         </div>
@@ -89,7 +81,6 @@ export default function ReportPage() {
         )}
       </main>
 
-      {/* Modal Chooser */}
       <ReportTypeModal
         open={isChooserOpen}
         onClose={() => setIsChooserOpen(false)}

@@ -4,20 +4,13 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { MoveLeft, ChevronDown, Image as ImageIcon, X } from "lucide-react";
 
-import type { Item } from "@/lib/types";
-import { addReport } from "@/lib/reportStorage";
+import type { Item, Status } from "@/lib/types";
+import { addTempReport } from "@/lib/tempReportsStore";  
+
 
 type ReportType = "lost" | "found";
 
-const CATEGORIES = [
-  "ID / Wallet",
-  "Phone",
-  "Laptop",
-  "Keys",
-  "Bag",
-  "Clothing",
-  "Other",
-];
+const CATEGORIES = ["ID / Wallet", "Phone", "Laptop", "Keys", "Bag", "Clothing", "Other"];
 
 const LOCATIONS = [
   "Guard House",
@@ -75,7 +68,6 @@ export default function ReportFormPage({ type }: { type: ReportType }) {
     e.preventDefault();
 
     let image: string | undefined = undefined;
-
     if (photoFile) {
       try {
         image = await fileToDataUrl(photoFile);
@@ -84,27 +76,35 @@ export default function ReportFormPage({ type }: { type: ReportType }) {
       }
     }
 
+    const tags: Status[] = [type === "lost" ? "LOST" : "FOUND", "REPORTED"];
+
+    // If you still want to show category (without breaking Status[] typing),
+    // keep it inside the description.
+    const descWithCategory =
+      category && category !== "Other"
+        ? `Category: ${category}\n\n${description.trim()}`
+        : description.trim();
+
     const newItem: Item = {
       id:
         typeof crypto !== "undefined" && "randomUUID" in crypto
           ? crypto.randomUUID()
           : String(Date.now()),
       title: itemName.trim() || "(No title)",
-      desc: description.trim() || "(No description)",
+      desc: descWithCategory || "(No description)",
       location,
       date,
       time: formatTime12h(time),
       image,
-      tags: [type === "lost" ? "LOST" : "FOUND", "REPORTED"],
+      tags,
     };
 
-    addReport(newItem);
+    addTempReport(newItem);
     router.push("/report");
   }
 
   return (
     <div className="relative min-h-screen bg-[#07121f] text-white">
-      {/* Background */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(1200px_700px_at_50%_0%,rgba(59,130,246,0.10),transparent_65%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(900px_600px_at_0%_60%,rgba(249,115,22,0.10),transparent_60%)]" />
@@ -118,7 +118,6 @@ export default function ReportFormPage({ type }: { type: ReportType }) {
           onSubmit={onSubmit}
           className="w-full max-w-220 rounded-[22px] bg-[#22324a] shadow-2xl ring-1 ring-white/10"
         >
-          {/* Header */}
           <div className="flex items-start justify-between px-8 py-7">
             <div>
               <button
@@ -126,13 +125,11 @@ export default function ReportFormPage({ type }: { type: ReportType }) {
                 onClick={() => router.push("/report")}
                 className="text-[15px] font-semibold tracking-wide text-orange-400 hover:text-orange-300"
               >
-                <MoveLeft className="inline-block mr-2 h-5 w-5" />
+                <MoveLeft className="mr-2 inline-block h-5 w-5" />
                 CHANGE TYPE
               </button>
 
-              <h1 className="mt-2 text-[25px] font-semibold text-white">
-                {title}
-              </h1>
+              <h1 className="mt-2 text-[25px] font-semibold text-white">{title}</h1>
             </div>
 
             <button
@@ -148,13 +145,11 @@ export default function ReportFormPage({ type }: { type: ReportType }) {
           <div className="h-px w-full bg-white/15" />
 
           <div className="px-8 py-7">
-            {/* ITEM INFORMATION */}
             <div className="text-[15px] font-semibold tracking-widest text-white/55">
               ITEM INFORMATION
             </div>
 
             <div className="mt-5 grid gap-6 sm:grid-cols-2">
-              {/* Item name */}
               <div>
                 <label className="mb-2 block text-[20px] font-medium text-white/75">
                   Item Name / Brand
@@ -162,12 +157,11 @@ export default function ReportFormPage({ type }: { type: ReportType }) {
                 <input
                   value={itemName}
                   onChange={(e) => setItemName(e.target.value)}
-                  placeholder="e.g iPhone 17, Key, Notebook"
+                  placeholder="e.g iPhone, Key, Notebook"
                   className="h-10 w-full rounded-xl bg-[#18263c] px-4 text-[15px] text-white/90 outline-none ring-1 ring-white/10 placeholder:text-white/40 focus:ring-white/20"
                 />
               </div>
 
-              {/* Category */}
               <div>
                 <label className="mb-2 block text-[20px] font-medium text-white/75">
                   Category
@@ -189,7 +183,6 @@ export default function ReportFormPage({ type }: { type: ReportType }) {
               </div>
             </div>
 
-            {/* Physical description */}
             <div className="mt-5">
               <label className="mb-2 block text-[20px] font-medium text-white/75">
                 Physical Description
@@ -202,45 +195,36 @@ export default function ReportFormPage({ type }: { type: ReportType }) {
               />
             </div>
 
-            {/* TIME & LOCATION + PHOTO */}
             <div className="mt-8 grid gap-6 sm:grid-cols-2">
-              {/* Time & Location */}
               <div>
                 <div className="text-[12px] font-semibold tracking-widest text-white/55">
                   TIME & LOCATION
                 </div>
 
-                {/* Date */}
                 <div className="mt-5">
                   <label className="mb-2 block text-[20px] font-medium text-white/75">
                     {dateLabel}
                   </label>
-                  <div className="relative">
-                    <input
-                      type="date"
-                      value={date}
-                      onChange={(e) => setDate(e.target.value)}
-                      className="h-10 w-full rounded-xl bg-[#18263c] px-4 text-[15px] text-white/90 outline-none ring-1 ring-white/10 focus:ring-white/20 scheme-dark"
-                    />
-                  </div>
+                  <input
+                    type="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    className="h-10 w-full rounded-xl bg-[#18263c] px-4 text-[15px] text-white/90 outline-none ring-1 ring-white/10 focus:ring-white/20 scheme-dark"
+                  />
                 </div>
 
-                {/* Time */}
                 <div className="mt-4">
                   <label className="mb-2 block text-[20px] font-medium text-white/75">
                     {timeLabel}
                   </label>
-                  <div className="relative">
-                    <input
-                      type="time"
-                      value={time}
-                      onChange={(e) => setTime(e.target.value)}
-                      className="h-10 w-full rounded-xl bg-[#18263c] px-4 text-[15px] text-white/90 outline-none ring-1 ring-white/10 focus:ring-white/20 scheme-dark"
-                    />
-                  </div>
+                  <input
+                    type="time"
+                    value={time}
+                    onChange={(e) => setTime(e.target.value)}
+                    className="h-10 w-full rounded-xl bg-[#18263c] px-4 text-[15px] text-white/90 outline-none ring-1 ring-white/10 focus:ring-white/20 scheme-dark"
+                  />
                 </div>
 
-                {/* Location */}
                 <div className="mt-4">
                   <label className="mb-2 block text-[20px] font-medium text-white/75">
                     Approximate Location
@@ -262,7 +246,6 @@ export default function ReportFormPage({ type }: { type: ReportType }) {
                 </div>
               </div>
 
-              {/* Photo */}
               <div>
                 <div className="text-[12px] font-semibold tracking-widest text-white/55">
                   PHOTO
