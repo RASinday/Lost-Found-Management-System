@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
 
 export type ReportType = "lost" | "found";
@@ -12,14 +11,11 @@ interface Props {
 }
 
 export default function ReportTypeModal({ open, onClose, onSelect }: Props) {
-  const router = useRouter();
-
   if (!open) return null;
 
   const handleSelect = (type: ReportType) => {
-    onSelect(type);     // keep your existing logic
-    onClose();          // close modal
-    router.push(type === "lost" ? "/report/lost" : "/report/found"); // route
+    onSelect(type);
+    onClose();
   };
 
   return (
@@ -33,14 +29,11 @@ export default function ReportTypeModal({ open, onClose, onSelect }: Props) {
 
       {/* Modal container */}
       <div className="relative z-101 w-full max-w-250 rounded-[28px] bg-[#22324a] p-10 shadow-2xl ring-1 ring-white/10">
-        {/* Title */}
         <h2 className="text-center text-[30px] font-semibold text-white">
           What would you like to report?
         </h2>
 
-        {/* Options */}
         <div className="mt-10 grid gap-8 md:grid-cols-2">
-          {/* Lost */}
           <button
             onClick={() => handleSelect("lost")}
             className="group flex flex-col items-center rounded-2xl bg-[#18263c] p-8 text-center ring-1 ring-white/10 transition hover:ring-white/20"
@@ -58,7 +51,6 @@ export default function ReportTypeModal({ open, onClose, onSelect }: Props) {
             </p>
           </button>
 
-          {/* Found */}
           <button
             onClick={() => handleSelect("found")}
             className="group flex flex-col items-center rounded-2xl bg-[#18263c] p-8 text-center ring-1 ring-white/10 transition hover:ring-white/20"
@@ -77,7 +69,6 @@ export default function ReportTypeModal({ open, onClose, onSelect }: Props) {
           </button>
         </div>
 
-        {/* Cancel */}
         <button
           onClick={onClose}
           className="mx-auto mt-10 block text-[20px] font-medium text-white/60 hover:text-white"

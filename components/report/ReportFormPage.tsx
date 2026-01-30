@@ -4,6 +4,9 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { MoveLeft, ChevronDown, Image as ImageIcon, X } from "lucide-react";
 
+import type { Item } from "@/lib/types";
+import { addReport } from "@/lib/reportStorage";
+
 type ReportType = "lost" | "found";
 
 const CATEGORIES = [
@@ -26,6 +29,27 @@ const LOCATIONS = [
   "Other",
 ];
 
+function formatTime12h(time: string) {
+  const [hStr, mStr] = (time || "").split(":");
+  const h = Number(hStr);
+  const m = Number(mStr);
+  if (Number.isNaN(h) || Number.isNaN(m)) return time || "";
+
+  const suffix = h >= 12 ? "PM" : "AM";
+  const hh = h % 12 === 0 ? 12 : h % 12;
+  const mm = String(m).padStart(2, "0");
+  return `${hh}:${mm} ${suffix}`;
+}
+
+function fileToDataUrl(file: File) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = () => reject(new Error("Failed to read file"));
+    reader.readAsDataURL(file);
+  });
+}
+
 export default function ReportFormPage({ type }: { type: ReportType }) {
   const router = useRouter();
 
@@ -35,7 +59,7 @@ export default function ReportFormPage({ type }: { type: ReportType }) {
   );
 
   const dateLabel = type === "lost" ? "Date Last Seen" : "Date Found";
-  const timeLabel = type === "lost" ? "Approximate time" : "Approximate time";
+  const timeLabel = "Approximate time";
 
   const [itemName, setItemName] = useState("");
   const [category, setCategory] = useState(CATEGORIES[0]);
@@ -43,37 +67,50 @@ export default function ReportFormPage({ type }: { type: ReportType }) {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [location, setLocation] = useState(LOCATIONS[0]);
-  const [photoName, setPhotoName] = useState<string | null>(null);
 
-  function onSubmit(e: React.FormEvent) {
+  const [photoName, setPhotoName] = useState<string | null>(null);
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+
+  async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    // Hook your API here
-    console.log({
-      type,
-      itemName,
-      category,
-      description,
-      date,
-      time,
-      location,
-      photoName,
-    });
+    let image: string | undefined = undefined;
 
-    // For now just go back to the report list
+    if (photoFile) {
+      try {
+        image = await fileToDataUrl(photoFile);
+      } catch {
+        image = undefined;
+      }
+    }
+
+    const newItem: Item = {
+      id:
+        typeof crypto !== "undefined" && "randomUUID" in crypto
+          ? crypto.randomUUID()
+          : String(Date.now()),
+      title: itemName.trim() || "(No title)",
+      desc: description.trim() || "(No description)",
+      location,
+      date,
+      time: formatTime12h(time),
+      image,
+      tags: [type === "lost" ? "LOST" : "FOUND", "REPORTED"],
+    };
+
+    addReport(newItem);
     router.push("/report");
   }
 
   return (
     <div className="relative min-h-screen bg-[#07121f] text-white">
-      {/* Background (subtle gradient) */}
+      {/* Background */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(1200px_700px_at_50%_0%,rgba(59,130,246,0.10),transparent_65%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(900px_600px_at_0%_60%,rgba(249,115,22,0.10),transparent_60%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(900px_600px_at_100%_55%,rgba(34,197,94,0.08),transparent_60%)]" />
       </div>
 
-      {/* Blur + dim BESIDE the card (same concept as your chooser modal backdrop) */}
       <div className="absolute inset-0 bg-black/55 backdrop-blur-md" />
 
       <main className="relative z-10 flex min-h-screen items-center justify-center px-5 py-10">
@@ -161,7 +198,7 @@ export default function ReportFormPage({ type }: { type: ReportType }) {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Color, size, material, distinguishing marks..."
-                className="min-h- w-full resize-none rounded-xl bg-[#18263c] px-4 py-3 text-[15px] text-white/90 outline-none ring-1 ring-white/10 placeholder:text-white/40 focus:ring-white/20"
+                className="w-full resize-none rounded-xl bg-[#18263c] px-4 py-3 text-[15px] text-white/90 outline-none ring-1 ring-white/10 placeholder:text-white/40 focus:ring-white/20"
               />
             </div>
 
@@ -179,13 +216,13 @@ export default function ReportFormPage({ type }: { type: ReportType }) {
                     {dateLabel}
                   </label>
                   <div className="relative">
-                     <input
-                        type="date"
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                        className="h-10 w-full rounded-xl bg-[#18263c] px-4 text-[15px] text-white/90 outline-none ring-1 ring-white/10 focus:ring-white/20 scheme-dark"
-                     />
-                     </div>
+                    <input
+                      type="date"
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
+                      className="h-10 w-full rounded-xl bg-[#18263c] px-4 text-[15px] text-white/90 outline-none ring-1 ring-white/10 focus:ring-white/20 scheme-dark"
+                    />
+                  </div>
                 </div>
 
                 {/* Time */}
@@ -194,12 +231,12 @@ export default function ReportFormPage({ type }: { type: ReportType }) {
                     {timeLabel}
                   </label>
                   <div className="relative">
-                  <input
-                     type="time"
-                     value={time}
-                     onChange={(e) => setTime(e.target.value)}
-                     className="h-10 w-full rounded-xl bg-[#18263c] px-4 text-[15px] text-white/90 outline-none ring-1 ring-white/10 focus:ring-white/20 scheme-dark"
-                  />
+                    <input
+                      type="time"
+                      value={time}
+                      onChange={(e) => setTime(e.target.value)}
+                      className="h-10 w-full rounded-xl bg-[#18263c] px-4 text-[15px] text-white/90 outline-none ring-1 ring-white/10 focus:ring-white/20 scheme-dark"
+                    />
                   </div>
                 </div>
 
@@ -237,7 +274,8 @@ export default function ReportFormPage({ type }: { type: ReportType }) {
                     accept="image/*"
                     className="hidden"
                     onChange={(e) => {
-                      const file = e.target.files?.[0];
+                      const file = e.target.files?.[0] ?? null;
+                      setPhotoFile(file);
                       setPhotoName(file ? file.name : null);
                     }}
                   />
@@ -252,7 +290,6 @@ export default function ReportFormPage({ type }: { type: ReportType }) {
               </div>
             </div>
 
-            {/* Submit */}
             <button
               type="submit"
               className="mt-8 h-12 w-full rounded-xl bg-orange-500 text-[15px] font-semibold text-white shadow-lg shadow-orange-500/15 hover:bg-orange-400"
