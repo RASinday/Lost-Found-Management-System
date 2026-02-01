@@ -1,57 +1,58 @@
 import { useSyncExternalStore } from "react";
-import type { Item } from "./types";
+import type { Item, Status } from "./types";
+import { sampleItems } from "./sampleItems";
 
 /**
  * Temporary in-memory store:
- * - Works until refresh
- * - Refresh resets to empty
+ * - Works during current session
+ * - Refresh resets to sampleItems
  */
-let reports: Item[] = [];
+let items: Item[] = [...sampleItems];
 const listeners = new Set<() => void>();
-
-const EMPTY: Item[] = []; // IMPORTANT: stable reference for server snapshot
+const EMPTY: Item[] = []; // stable snapshot for SSR
 
 function emit() {
   for (const l of listeners) l();
 }
 
-export function getTempReports(): Item[] {
-  return reports;
+export function getTempItems(): Item[] {
+  return items;
 }
 
 export function addTempReport(item: Item) {
-  reports = [item, ...reports];
+  items = [item, ...items];
   emit();
 }
 
-export function deleteTempReport(id: string) {
-  reports = reports.filter((r) => r.id !== id);
+export function updateTempItem(updated: Item) {
+  items = items.map((it) => (it.id === updated.id ? updated : it));
   emit();
 }
 
-export function clearTempReports() {
-  reports = [];
+/** Mark item as CLAIM (after verification submit) */
+export function claimTempItem(id: string) {
+  items = items.map((it) => {
+    if (it.id !== id) return it;
+    if (it.tags.includes("CLAIM")) return it;
+
+    const nextTags: Status[] = [...it.tags, "CLAIM"];
+    return { ...it, tags: nextTags };
+  });
   emit();
 }
 
-export function subscribeTempReports(listener: () => void) {
+export function subscribeTempItems(listener: () => void) {
   listeners.add(listener);
-  return () => {
-    listeners.delete(listener);
-  };
+  return () => listeners.delete(listener);
 }
 
-export function useTempReports() {
-  const snapshot = useSyncExternalStore(
-    subscribeTempReports,
-    getTempReports,
-    () => EMPTY // IMPORTANT: stable server snapshot
-  );
+export function useTempItems() {
+  const snapshot = useSyncExternalStore(subscribeTempItems, getTempItems, () => EMPTY);
 
   return {
-    reports: snapshot,
+    items: snapshot,
     addTempReport,
-    deleteTempReport,
-    clearTempReports,
+    updateTempItem,
+    claimTempItem,
   };
 }

@@ -1,12 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { MoveLeft, ChevronDown, Image as ImageIcon, X } from "lucide-react";
 
 import type { Item, Status } from "@/lib/types";
-import { addTempReport } from "@/lib/tempReportsStore";  
-
+import { addTempReport, updateTempItem, getTempItems } from "@/lib/tempReportsStore";
 
 type ReportType = "lost" | "found";
 
@@ -43,17 +42,28 @@ function fileToDataUrl(file: File) {
   });
 }
 
-export default function ReportFormPage({ type }: { type: ReportType }) {
+export default function ReportFormPage({
+  type,
+  editId,
+}: {
+  type: ReportType;
+  editId?: string;
+}) {
   const router = useRouter();
 
-  const title = useMemo(
-    () => (type === "lost" ? "Report Lost Item" : "Report Found Item"),
-    [type]
-  );
+  const isEdit = !!editId;
 
+  const existingItem = useMemo(() => {
+    if (!editId) return null;
+    return getTempItems().find((x) => x.id === editId) ?? null;
+  }, [editId]);
+
+  // Title change requested
+  const title = isEdit ? "Edit Report" : type === "lost" ? "Report Lost Item" : "Report Found Item";
   const dateLabel = type === "lost" ? "Date Last Seen" : "Date Found";
   const timeLabel = "Approximate time";
 
+  // form state
   const [itemName, setItemName] = useState("");
   const [category, setCategory] = useState(CATEGORIES[0]);
   const [description, setDescription] = useState("");
@@ -64,27 +74,81 @@ export default function ReportFormPage({ type }: { type: ReportType }) {
   const [photoName, setPhotoName] = useState<string | null>(null);
   const [photoFile, setPhotoFile] = useState<File | null>(null);
 
+  // keep existing image if user doesn't upload a new one
+  const [existingImage, setExistingImage] = useState<string | undefined>(undefined);
+
+  // Prefill on edit
+  useEffect(() => {
+    if (!isEdit) return;
+    if (!existingItem) return;
+
+    setItemName(existingItem.title ?? "");
+    setDescription(existingItem.desc ?? "");
+    setDate(existingItem.date ?? "");
+    setLocation(existingItem.location ?? "");
+    setExistingImage(existingItem.image);
+
+    // If your time is stored like "12:30 PM", we keep it as-is.
+    // If you want to convert back to 24h time input, tell me.
+    setTime("");
+
+    // Category is not a field in Item type; keep default.
+    setCategory(CATEGORIES[0]);
+
+    // show something in UI so user knows there's already an image
+    setPhotoName(existingItem.image ? "Existing image" : null);
+    setPhotoFile(null);
+  }, [isEdit, existingItem]);
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    let image: string | undefined = undefined;
+    // decide image
+    let image: string | undefined = existingImage;
     if (photoFile) {
       try {
         image = await fileToDataUrl(photoFile);
       } catch {
-        image = undefined;
+        // keep existingImage
+        image = existingImage;
       }
     }
 
-    const tags: Status[] = [type === "lost" ? "LOST" : "FOUND", "REPORTED"];
+    // tags must be Status[]
+    let tags: Status[] = [type === "lost" ? "LOST" : "FOUND", "REPORTED"];
 
-    // If you still want to show category (without breaking Status[] typing),
-    // keep it inside the description.
+    if (isEdit && existingItem) {
+      // preserve existing tags like CLAIM
+      // also preserve LOST/FOUND based on page type
+      const preserved = existingItem.tags.filter((t) => t === "CLAIM");
+      tags = Array.from(new Set<Status>([...tags, ...preserved]));
+    }
+
+    // keep category safely inside description (optional)
     const descWithCategory =
       category && category !== "Other"
         ? `Category: ${category}\n\n${description.trim()}`
         : description.trim();
 
+    if (isEdit && existingItem) {
+      const updated: Item = {
+        ...existingItem,
+        title: itemName.trim() || existingItem.title,
+        desc: descWithCategory || existingItem.desc,
+        location,
+        date,
+        // if user didn't pick time (because time input expects 24h), preserve old time
+        time: time ? formatTime12h(time) : existingItem.time,
+        image,
+        tags,
+      };
+
+      updateTempItem(updated);
+      router.push("/report");
+      return;
+    }
+
+    // Create new
     const newItem: Item = {
       id:
         typeof crypto !== "undefined" && "randomUUID" in crypto
@@ -277,7 +341,7 @@ export default function ReportFormPage({ type }: { type: ReportType }) {
               type="submit"
               className="mt-8 h-12 w-full rounded-xl bg-orange-500 text-[15px] font-semibold text-white shadow-lg shadow-orange-500/15 hover:bg-orange-400"
             >
-              Submit Report
+              {isEdit ? "Save Changes" : "Submit Report"}
             </button>
           </div>
         </form>
