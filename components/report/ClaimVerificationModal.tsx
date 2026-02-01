@@ -41,7 +41,7 @@ export default function ClaimVerificationModal({
       />
 
       {/* modal */}
-      <div className="relative z-[301] w-full max-w-[680px] overflow-hidden rounded-[28px] bg-[#22324a] shadow-2xl ring-1 ring-white/10">
+      <div className="relative z-301 w-full max-w-170 overflow-hidden rounded-[28px] bg-[#22324a] shadow-2xl ring-1 ring-white/10">
         {/* header */}
         <div className="flex items-start justify-between px-10 py-8">
           <div className="flex items-start gap-4">
@@ -105,7 +105,7 @@ export default function ClaimVerificationModal({
               value={proof}
               onChange={(e) => setProof(e.target.value)}
               placeholder="e.g. Serial numbers, specific contents inside, unique marks, wallpaper description..."
-              className="min-h-[120px] w-full resize-none rounded-2xl bg-[#0f1e33] px-5 py-4 text-[14px] text-white/80 outline-none ring-1 ring-white/10 placeholder:text-white/35 focus:ring-white/20"
+              className="min-h-30 w-full resize-none rounded-2xl bg-[#0f1e33] px-5 py-4 text-[14px] text-white/80 outline-none ring-1 ring-white/10 placeholder:text-white/35 focus:ring-white/20"
             />
           </div>
 
