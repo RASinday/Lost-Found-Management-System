@@ -27,14 +27,14 @@ export default function ItemDetailsModal({
   const showClaim = canClaim(item);
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center p-6">
+    <div className="fixed inset-0 z-200 flex items-center justify-center p-6">
       <button
         className="absolute inset-0 bg-black/60 backdrop-blur-md"
         onClick={onClose}
         aria-label="Close modal"
       />
 
-      <div className="relative z-[201] w-full max-w-[1200px] overflow-hidden rounded-[32px] bg-[#223555] shadow-2xl ring-1 ring-white/10">
+      <div className="relative z-201 w-full max-w-300 overflow-hidden rounded-[32px] bg-[#223555] shadow-2xl ring-1 ring-white/10">
         <button
           type="button"
           onClick={onClose}
@@ -46,11 +46,11 @@ export default function ItemDetailsModal({
 
         <div className="grid grid-cols-1 md:grid-cols-2">
           {/* Left image */}
-          <div className="relative min-h-[420px] bg-white">
+          <div className="relative min-h-105 bg-white">
             {item.image ? (
               <Image src={item.image} alt={item.title} fill className="object-cover" sizes="(max-width:768px) 100vw, 50vw" />
             ) : (
-              <div className="flex h-full min-h-[420px] w-full items-center justify-center">
+              <div className="flex h-full min-h-105 w-full items-center justify-center">
                 <span className="text-black/40 text-[20px]">No image</span>
               </div>
             )}
