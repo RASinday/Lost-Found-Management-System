@@ -116,6 +116,13 @@
 }
 
 @layer base {
+  :root {
+    --sidebar-background: 222.2 84% 4.9%;   /* #020817 */
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 217.2 91.2% 59.8%;
+    --sidebar-border: 217.2 32.6% 17.5%;    /* #12223b */
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
   * {
     @apply border-border outline-ring/50;
   }
