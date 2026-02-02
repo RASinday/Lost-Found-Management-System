@@ -1,62 +1,53 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import {Search} from "lucide-react";
-const navLinks = [
-  { label: "Home", href: "/home" },
-  { label: "Report", href: "/report" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
+import { Search } from "lucide-react";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 export default function TopBar() {
-  const pathname = usePathname();
-
   return (
     <header className="sticky top-0 z-50">
       <div className="h-18 bg-[#294372]">
-        <nav className="mx-auto flex h-full w-full max-w-550 items-center justify-between px-10">
-          {/* Brand */}
-          <Link href="/home" className="text-[26px] font-medium tracking-wide">
-            <Search className="h-15 inline-block mr-3 text-orange-300" />
+        <nav className="relative mx-auto flex h-full w-full items-center px-4 sm:px-10">
+          {/* LEFT: Brand */}
+          <Link
+            href="/home"
+            className="flex items-center text-[22px] sm:text-[26px] font-medium tracking-wide"
+          >
+            <Search className="mr-2 h-5 w-5 sm:h-6 sm:w-6 text-orange-300" />
             <span className="text-white">HNV</span>
             <span className="text-orange-300">Search</span>
           </Link>
 
-          {/* Navigation */}
-          <ul className="hidden items-center gap-20 md:flex">
-            {navLinks.map((link) => {
-              const isActive = pathname.startsWith(link.href);
+          {/* CENTER: Desktop nav (Home / Report / About / Contact) */}
+          <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-8 text-sm font-medium text-white/90">
+            <Link href="/home" className="hover:text-white">
+              Home
+            </Link>
+            <Link href="/report" className="hover:text-white">
+              Report
+            </Link>
+            <Link href="/about" className="hover:text-white">
+              About
+            </Link>
+            <Link href="/contact" className="hover:text-white">
+              Contact
+            </Link>
+          </div>
 
-              return (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className={[
-                      "relative text-[16px] font-medium transition-colors",
-                      isActive
-                        ? "text-orange-300"
-                        : "text-white/90 hover:text-white",
-                    ].join(" ")}
-                  >
-                    {link.label}
-                    {isActive && (
-                      <span className="absolute -bottom-2 left-0 h-0.75 w-full bg-orange-300" />
-                    )}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+          {/* RIGHT: Log in on desktop, sidebar trigger on mobile */}
+          <div className="ml-auto flex items-center gap-3">
+            {/* Desktop Log in */}
+            <Link
+              href="/login"
+              className="hidden md:inline-flex rounded-md bg-orange-500 px-3 py-1.5 text-sm font-semibold text-white hover:bg-orange-600"
+            >
+              Log in
+            </Link>
 
-          {/* Login */}
-          <Link
-            href="/login"
-            className="text-[16px] font-medium text-white/90 hover:text-white"
-          >
-            Log in
-          </Link>
+            {/* Mobile menu button */}
+            <SidebarTrigger className="text-white md:hidden" />
+          </div>
         </nav>
       </div>
     </header>
