@@ -74,16 +74,17 @@ export default function EditReportModal({
   onClose: () => void;
   onUpdate: (updated: Item) => void;
 }) {
-  const isOpen = open && item !== null;
-
+  // keep hooks safe (they must run regardless)
   const initialCategory = useMemo(() => {
     if (!item) return CATEGORIES[0];
-    // If you have a real "category" field, use it (without breaking TS)
+
+    // supports future `category` field if you add it later
     const anyItem = item as unknown as { category?: unknown };
     if (typeof anyItem.category === "string" && anyItem.category) return anyItem.category;
 
     const parsed = extractCategoryFromDesc(item.desc || "");
     if (parsed.category && CATEGORIES.includes(parsed.category)) return parsed.category;
+
     return CATEGORIES[0];
   }, [item]);
 
@@ -106,7 +107,7 @@ export default function EditReportModal({
   const [existingImage, setExistingImage] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    if (!isOpen || !item) return;
+    if (!open || !item) return;
 
     setItemName(item.title ?? "");
     setCategory(initialCategory);
@@ -118,22 +119,15 @@ export default function EditReportModal({
     setExistingImage(item.image);
     setPhotoFile(null);
     setPhotoName(item.image ? "Existing image" : null);
-  }, [isOpen, item, initialCategory, initialDesc]);
+  }, [open, item, initialCategory, initialDesc]);
 
-  if (!isOpen || !item) return null;
+  // ✅ render guard
+  if (!open || !item) return null;
+
+  // ✅ after this line, item is Item (not null)
+  const base: Item = item;
 
   async function handleUpdate() {
-    // ✅ hard guard so TS knows item is not null and id exists
-    if (!item) {
-      alert("Cannot edit: item is missing.");
-      return;
-    }
-    const id = item.id;
-    if (!id) {
-      alert("Cannot edit: item id is missing.");
-      return;
-    }
-
     let image = existingImage;
     if (photoFile) {
       try {
@@ -143,30 +137,30 @@ export default function EditReportModal({
       }
     }
 
-    const anyItem = item as unknown as { category?: unknown };
+    const anyBase = base as unknown as { category?: unknown };
 
     const descFinal =
-      typeof anyItem.category === "string"
+      typeof anyBase.category === "string"
         ? description.trim()
         : category && category !== "Other"
           ? `Category: ${category}\n${description.trim()}`
           : description.trim();
 
-    // ✅ Now TS is happy: id is guaranteed string here
+    // ✅ Item is satisfied: id is required string from base.id
     const updated: Item = {
-      ...item,
-      id, // ensure required string id
-      title: itemName.trim() || item.title,
-      desc: descFinal || item.desc,
+      ...base,
+      id: base.id,
+      title: itemName.trim() || base.title,
+      desc: descFinal || base.desc,
       date,
-      time: time24 ? time24To12(time24) : item.time,
+      time: time24 ? time24To12(time24) : base.time,
       location,
       image,
-      tags: item.tags, // keep tags unchanged
+      tags: base.tags,
     };
 
-    // optional: if you really have a category field in your Item, keep it updated
-    if (typeof anyItem.category === "string") {
+    // optional future support if you add category to Item later
+    if (typeof anyBase.category === "string") {
       (updated as unknown as { category?: string }).category = category;
     }
 

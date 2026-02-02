@@ -1,5 +1,7 @@
 export type Status = "FOUND" | "LOST" | "REPORTED" | "CLAIM";
 
+export type ReportKind = "lost" | "found";
+
 export type Item = {
   id: string;
   title: string;
