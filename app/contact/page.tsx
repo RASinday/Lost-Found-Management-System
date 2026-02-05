@@ -38,7 +38,7 @@ export default function ContactPage() {
           <h1 className="text-5xl md:text-6xl font-bold mb-4">
             Contact <span className="text-orange-500">Information</span>
           </h1>
-          <p className="text-gray-400">For inquiries, verification, or claiming of items...</p>
+          <p className="text-gray-400">For inquiries, verification, or claiming of items, you may contact our dedicated team within school hours.</p>
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
@@ -68,11 +68,11 @@ export default function ContactPage() {
                    </div>
                    <div className="flex gap-3 items-start text-sm text-gray-400 group">
                       <Phone size={16} className="mt-1 text-orange-500" />
-                      <span className="group-hover:text-white transition-colors">CONTACT: [0905 417 1294]</span>
+                      <span className="group-hover:text-white transition-colors">CONTACT: [0905 123 4567]</span>
                    </div>
                    <div className="flex gap-3 items-start text-sm text-gray-400 group">
                       <Mail size={16} className="mt-1 text-orange-500" />
-                      <span className="group-hover:text-white transition-colors">EMAIL: [cabalesmilchzedek@gmail.com]</span>
+                      <span className="group-hover:text-white transition-colors">EMAIL: [HNVS-SSLG@gmail.com]</span>
                    </div>
                 </div>
               </div>
