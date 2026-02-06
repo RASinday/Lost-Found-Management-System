@@ -35,7 +35,7 @@ export default function HomePage() {
       {/* ================= HERO / HOME SECTION ================= */}
       <div className="relative min-h-screen w-full overflow-hidden bg-slate-950 text-white">
         <Image
-          src="/HNVS.png"
+          src="/HNVS1.png"
           alt="HNVS campus background"
           fill
           priority
