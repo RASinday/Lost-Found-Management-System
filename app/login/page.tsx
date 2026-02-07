@@ -39,7 +39,7 @@ export default function LoginPage() {
     <main className="relative min-h-screen w-full overflow-hidden">
       {/* Background image */}
       <Image
-        src="/HNVS.png"
+        src="/HNVS1.png"
         alt="Login background"
         fill
         priority
