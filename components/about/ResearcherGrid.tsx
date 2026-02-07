@@ -38,7 +38,7 @@ export default function ResearcherGrid() {
     <section className="space-y-10">
       <div className="flex items-center justify-center gap-6 text-base md:text-lg tracking-[0.35em] text-amber-400 font-bold">
         <span className="h-px w-24 md:w-90 bg-slate-600" />
-        <span className="uppercase">Researcher Team</span>
+        <span className="uppercase text-center">Researcher Team</span>
         <span className="h-px w-24 md:w-90 bg-slate-600" />
       </div>
 

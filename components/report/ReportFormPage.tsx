@@ -77,6 +77,9 @@ export default function ReportFormPage({
   // keep existing image if user doesn't upload a new one
   const [existingImage, setExistingImage] = useState<string | undefined>(undefined);
 
+  // Error state for validation
+  const [error, setError] = useState<string>("");
+
   // Prefill on edit
   useEffect(() => {
     if (!isEdit) return;
@@ -100,8 +103,28 @@ export default function ReportFormPage({
     setPhotoFile(null);
   }, [isEdit, existingItem]);
 
+  function validate(): string {
+    if (!itemName.trim()) return "Item Name / Brand is required.";
+    if (!category.trim()) return "Category is required.";
+    if (!description.trim()) return "Physical Description is required.";
+    if (!date.trim()) return `${dateLabel} is required.`;
+    if (!time.trim()) return "Approximate time is required.";
+    if (!location.trim()) return "Approximate Location is required.";
+    return "";
+  }
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    // Validate all required fields
+    const validationError = validate();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    // Clear error if validation passes
+    setError("");
 
     // decide image
     let image: string | undefined = existingImage;
@@ -336,6 +359,12 @@ export default function ReportFormPage({
                 </label>
               </div>
             </div>
+
+            {error && (
+              <div className="mt-8 rounded-xl bg-red-500/10 px-5 py-4 text-[15px] text-red-200 ring-1 ring-red-500/30">
+                {error}
+              </div>
+            )}
 
             <button
               type="submit"

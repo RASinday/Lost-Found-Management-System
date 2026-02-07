@@ -18,12 +18,17 @@ export default function ItemCard({
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") onOpen();
       }}
-      className="cursor-pointer overflow-hidden rounded-2xl bg-[#223555] shadow-xl ring-1 ring-white/10"
+      className="group cursor-pointer overflow-hidden rounded-2xl bg-[#223555] shadow-xl ring-1 ring-white/10"
     >
       {/* Image */}
-      <div className="relative h-80 w-full bg-white/5">
+      <div className="relative h-80 w-full overflow-hidden bg-white/5">
         {item.image ? (
-          <Image src={item.image} alt={item.title} fill className="object-cover" />
+          <Image
+            src={item.image}
+            alt={item.title}
+            fill
+            className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+          />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-white">
             <span className="text-black/40 text-[20px]">No image</span>
