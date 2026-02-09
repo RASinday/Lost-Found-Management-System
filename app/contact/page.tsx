@@ -27,7 +27,7 @@ export default function ContactPage() {
     { role: "PRESIDENT", name: "Arwen Yan" },
     { role: "V-PRESIDENT (SHS)", name: "John Ivan Urgel" },
     { role: "V-PRESIDENT (JHS)", name: "Allen Mae Labides" },
-    { role: "SSLG ADVISER", name: "Ritchie Benlot" },
+    { role: "SSLG ADVISER", name: "Richie Benlot" },
   ];
 
   return (
@@ -68,11 +68,11 @@ export default function ContactPage() {
                    </div>
                    <div className="flex gap-3 items-start text-sm text-gray-400 group">
                       <Phone size={16} className="mt-1 text-orange-500" />
-                      <span className="group-hover:text-white transition-colors">CONTACT: [0905 123 4567]</span>
+                      <span className="group-hover:text-white transition-colors">CONTACT: [0970 689 0304]</span>
                    </div>
                    <div className="flex gap-3 items-start text-sm text-gray-400 group">
                       <Mail size={16} className="mt-1 text-orange-500" />
-                      <span className="group-hover:text-white transition-colors">EMAIL: [HNVS-SSLG@gmail.com]</span>
+                      <span className="group-hover:text-white transition-colors">EMAIL: [sslghnvs@gmail.com]</span>
                    </div>
                 </div>
               </div>

@@ -3,7 +3,7 @@ import ResearcherCard, { Researcher } from "./ResearcherCard";
 const RESEARCHERS: Researcher[] = [
   {
     name: "Heinz Harrold G. Tan",
-    email: "sourcepolem05@gmail.com",
+    email: "sourcepolemos@gmail.com",
     imageSrc: "/images/researchers/heinz2.png",
   },
   {
