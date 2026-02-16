@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Search } from "lucide-react";
+import { Search, Home, FileText, Info, Mail, Menu, LogIn } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
 export default function TopBar() {
@@ -24,16 +24,20 @@ export default function TopBar() {
           <div className="hidden md:flex items-center gap-8">
             {/* Navigation links */}
             <div className="flex items-center gap-8 text-[15px] font-medium text-white/90">
-              <Link href="/home" className="hover:text-white">
+              <Link href="/home" className="flex items-center gap-2 hover:text-white transition-colors">
+                <Home size={18} />
                 Home
               </Link>
-              <Link href="/report" className="hover:text-white">
+              <Link href="/report" className="flex items-center gap-2 hover:text-white transition-colors">
+                <FileText size={18} />
                 Report
               </Link>
-              <Link href="/about" className="hover:text-white">
+              <Link href="/about" className="flex items-center gap-2 hover:text-white transition-colors">
+                <Info size={18} />
                 About
               </Link>
-              <Link href="/contact" className="hover:text-white">
+              <Link href="/contact" className="flex items-center gap-2 hover:text-white transition-colors">
+                <Mail size={18} />
                 Contact
               </Link>
             </div>
@@ -41,14 +45,19 @@ export default function TopBar() {
             {/* Log in button */}
             <Link
               href="/login"
-              className="rounded-[10px] bg-orange-500 px-5 py-1.5 text-[15px] font-semibold text-white hover:bg-orange-600 shrink-0"
+              className="rounded-[10px] bg-orange-500 px-5 py-1.5 text-[15px] font-semibold text-white hover:bg-orange-600 shrink-0 items-center gap-2 flex"
             >
+              <LogIn size={18} />
               Log in
             </Link>
-          </div>
+         </div>
 
           {/* Mobile menu button */}
-          <SidebarTrigger className="text-white md:hidden" />
+          <div className="md:hidden">
+            <SidebarTrigger className="flex items-center gap-2 text-white hover:text-orange-300 transition-colors">
+              <Menu size={20} />
+            </SidebarTrigger>
+          </div>
         </nav>
       </div>
     </header>

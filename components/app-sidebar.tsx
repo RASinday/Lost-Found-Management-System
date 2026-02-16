@@ -10,13 +10,13 @@ import {
   SidebarMenu,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Home, FilePlus2, Info, Phone, LogIn } from "lucide-react";
+import { Home, FileText, Info, Mail, LogIn } from "lucide-react";
 
 const navLinks = [
   { label: "Home", href: "/home", icon: Home },
-  { label: "Report", href: "/report", icon: FilePlus2 },
+  { label: "Report", href: "/report", icon: FileText },
   { label: "About", href: "/about", icon: Info },
-  { label: "Contact", href: "/contact", icon: Phone },
+  { label: "Contact", href: "/contact", icon: Mail },
 ];
 
 export function AppSidebar() {
