@@ -29,7 +29,7 @@ export function AppSidebar() {
       className="md:hidden border-l border-[#12223b] bg-[#020817] text-slate-100"
     >
       <SidebarHeader className="border-b border-[#12223b] bg-[#294372] text-white px-5 py-4 shadow-sm">
-        <span className="text-xs font-bold uppercase tracking-widest opacity-90">
+        <span className="text-sm font-bold uppercase tracking-widest opacity-90">
           Menu
         </span>
       </SidebarHeader>
