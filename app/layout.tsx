@@ -5,8 +5,8 @@ import { AppSidebar } from "@/components/app-sidebar";
 import TopBar from "@/components/NavBar";
 
 export const metadata: Metadata = {
-  title: "Next.js App",
-  description: "Next.js App",
+  title: "HNVSearch - Lost and Found Management System",
+  description: "HNVSearch - Lost and Found Management System for HNVS",
 };
 
 export default function RootLayout({
