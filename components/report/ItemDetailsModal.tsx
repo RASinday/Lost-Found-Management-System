@@ -65,22 +65,22 @@ export default function ItemDetailsModal({
             </div>
 
             <div className="mt-6 flex items-start justify-between gap-4">
-              <h2 className="text-[34px] font-semibold text-white leading-tight">{item.title}</h2>
+              <h2 className="text-[20px] font-semibold text-white leading-tight">{item.title}</h2>
 
               {/* edit icon */}
               <button
                 type="button"
                 onClick={() => onEdit(item)}
-                className="grid h-12 w-12 place-items-center rounded-xl bg-white/10 text-white/90 ring-1 ring-white/10 hover:bg-white/15"
+                className="grid h-10 w-10 place-items-center rounded-xl bg-white/10 text-white/90 ring-1 ring-white/10 hover:bg-white/15"
                 aria-label="Edit item"
               >
-                <Pencil className="h-6 w-6" />
+                <Pencil className="h-5 w-5" />
               </button>
             </div>
 
-            <div className="mt-6">
-              <div className="text-[14px] font-semibold tracking-widest text-orange-400">DESCRIPTION</div>
-              <p className="mt-3 text-[18px] leading-7 text-white/75">{item.desc}</p>
+            <div className="mt-5">
+              <div className="text-[15px] font-semibold tracking-widest text-orange-400">DESCRIPTION</div>
+              <p className="mt-3 text-[15px] leading-7 text-white/75">{item.desc}</p>
             </div>
 
             <div className="my-8 h-px w-full bg-white/10" />
@@ -88,7 +88,7 @@ export default function ItemDetailsModal({
             <div className="grid grid-cols-2 gap-10">
               <div>
                 <div className="text-[13px] font-semibold tracking-widest text-white/45">LOCATION</div>
-                <div className="mt-3 flex items-center gap-3 text-[18px] text-white/80">
+                <div className="mt-3 flex items-center gap-3 text-[13px] text-white/80">
                   <MapPin className="h-5 w-5 text-amber-400" />
                   <span>{item.location}</span>
                 </div>
@@ -96,7 +96,7 @@ export default function ItemDetailsModal({
 
               <div>
                 <div className="text-[13px] font-semibold tracking-widest text-white/45">REPORTED DATE</div>
-                <div className="mt-3 flex items-center gap-3 text-[18px] text-white/80">
+                <div className="mt-3 flex items-center gap-3 text-[13px] text-white/80">
                   <Calendar className="h-5 w-5 text-amber-400" />
                   <span>{item.date}</span>
                 </div>
@@ -109,7 +109,7 @@ export default function ItemDetailsModal({
                 <button
                   type="button"
                   onClick={() => onStartClaim(item)}
-                  className="mt-6 w-full rounded-2xl bg-orange-500 py-4 text-[18px] font-semibold text-white shadow-lg shadow-orange-500/20 hover:bg-orange-400"
+                  className="mt-6 w-full rounded-2xl bg-orange-500 py-4 text-[15px] font-semibold text-white shadow-lg shadow-orange-500/20 hover:bg-orange-400"
                 >
                   <ShieldCheck className="mr-3 inline-block h-6 w-6" />
                   Claim this Item

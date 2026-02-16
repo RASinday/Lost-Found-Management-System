@@ -10,13 +10,13 @@ import {
   SidebarMenu,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Home, FilePlus2, Info, Phone, LogIn } from "lucide-react";
+import { Home, FileText, Info, Mail, LogIn } from "lucide-react";
 
 const navLinks = [
   { label: "Home", href: "/home", icon: Home },
-  { label: "Report", href: "/report", icon: FilePlus2 },
+  { label: "Report", href: "/report", icon: FileText },
   { label: "About", href: "/about", icon: Info },
-  { label: "Contact", href: "/contact", icon: Phone },
+  { label: "Contact", href: "/contact", icon: Mail },
 ];
 
 export function AppSidebar() {
@@ -29,7 +29,7 @@ export function AppSidebar() {
       className="md:hidden border-l border-[#12223b] bg-[#020817] text-slate-100"
     >
       <SidebarHeader className="border-b border-[#12223b] bg-[#294372] text-white px-5 py-4 shadow-sm">
-        <span className="text-xs font-bold uppercase tracking-widest opacity-90">
+        <span className="text-sm font-bold uppercase tracking-widest opacity-90">
           Menu
         </span>
       </SidebarHeader>

@@ -35,7 +35,7 @@ export function claimTempItem(id: string) {
     if (it.id !== id) return it;
     if (it.tags.includes("CLAIM")) return it;
 
-    const nextTags: Status[] = [...it.tags, "CLAIM"];
+    const nextTags: Status[] = [...it.tags.filter((t) => t !== "REPORTED"), "CLAIM"];
     return { ...it, tags: nextTags };
   });
   emit();

@@ -6,19 +6,78 @@ import { MoveLeft, ChevronDown, Image as ImageIcon, X } from "lucide-react";
 
 import type { Item, Status } from "@/lib/types";
 import { addTempReport, updateTempItem, getTempItems } from "@/lib/tempReportsStore";
+import ReportTypeModal, { type ReportType as ReportTypeEnum } from "./ReportTypeModal";
 
 type ReportType = "lost" | "found";
 
-const CATEGORIES = ["ID / Wallet", "Phone", "Laptop", "Keys", "Bag", "Clothing", "Other"];
+const CATEGORIES = [
+  "ID", 
+  "Wallet",
+  "Phone",
+  "Keys", 
+  "Bag", 
+  "Thumbler",
+  "Handkerchief",
+  "Towel",
+  "Picture",
+  "Clothing",
+  "Footwear",
+  "Other"
+];
 
 const LOCATIONS = [
-  "Guard House",
-  "Library",
-  "Cafeteria",
-  "Lecture Hall",
+  "JHS Guard House",
+  "PTA Office",
+  "Principal's  Office",
+  "Admin Office",
+  "Waiting Shed (between PTA & LAB. 1)",
+  "LAB. 1",
+  "LAB. 2",
+  "Math Park",
+  "Science Building (Old Library)",
+  "HNVS Kiosk (Guest House)",
+  "Garments Building",
+  "Supply Office/Clinic",
+  "Casa (near Science Buildingg)",
+  "JHS Canteen",
   "Parking",
-  "Sports Complex",
+  "ERAP Sports Complex",
+  "HNVS Quadrangle",
+  "HNVS Gym",
+  "HNVS Stage",
+  "SSLG Stage",
+  "HNVS Pathway",
+  "Guidance Office",
+  "Covered Walk",
+  "Science Laboratory",
+  "New Comp. Lab",
+  "New Library",
+  "MAPEH Office",
+  "HNVS Coop",
+  "Foodtrades Building",
+  "Automotive Building",
+  "Old Waiting Shed (near ERAP)",
+  "MAPEH Building",
+  "Generic Building (near cemetery)",
+  "Civil Tech. Building",
+  "Pharma. Garden",
+  "CSS Building",
+  "HNVS Gulayan",
+  "SHS Canteen",
+  "SHS Guardhouse",
+  "Old Building",
+  "Building 1",
+  "Building 2",
+  "Building 3",
+  "SHS Pathway",
+  "SHS Grounds",
+  "Makeshift (Acacia)",
+  "Annex Building",
+  "Small Grand Stand",
+  "Big Grand Stand",
+  "HNVS Oval",
   "Other",
+
 ];
 
 function formatTime12h(time: string) {
@@ -80,6 +139,14 @@ export default function ReportFormPage({
   // Error state for validation
   const [error, setError] = useState<string>("");
 
+  // Type modal state
+  const [isTypeModalOpen, setIsTypeModalOpen] = useState(false);
+
+  const handleTypeChange = (newType: ReportTypeEnum) => {
+    setIsTypeModalOpen(false);
+    router.push(`/report/${newType}`);
+  };
+
   // Prefill on edit
   useEffect(() => {
     if (!isEdit) return;
@@ -138,14 +205,9 @@ export default function ReportFormPage({
     }
 
     // tags must be Status[]
-    let tags: Status[] = [type === "lost" ? "LOST" : "FOUND", "REPORTED"];
-
-    if (isEdit && existingItem) {
-      // preserve existing tags like CLAIM
-      // also preserve LOST/FOUND based on page type
-      const preserved = existingItem.tags.filter((t) => t === "CLAIM");
-      tags = Array.from(new Set<Status>([...tags, ...preserved]));
-    }
+    const baseTag: Status = type === "lost" ? "LOST" : "FOUND";
+    const isClaimed = isEdit && existingItem?.tags.includes("CLAIM");
+    let tags: Status[] = isClaimed ? [baseTag, "CLAIM"] : [baseTag, "REPORTED"];
 
     // keep category safely inside description (optional)
     const descWithCategory =
@@ -200,181 +262,184 @@ export default function ReportFormPage({
 
       <div className="absolute inset-0 bg-black/55 backdrop-blur-md" />
 
-      <main className="relative z-10 flex min-h-screen items-center justify-center px-5 py-10">
-        <form
-          onSubmit={onSubmit}
-          className="w-full max-w-220 rounded-[22px] bg-[#22324a] shadow-2xl ring-1 ring-white/10"
-        >
-          <div className="flex items-start justify-between px-8 py-7">
+      <main className="relative z-10 flex min-h-screen items-center justify-center p-4 py-10">
+        <div className="w-full max-w-2xl overflow-hidden rounded-2xl border border-white/10 bg-[#151F2E]">
+          <div className="flex items-start justify-between border-b border-white/5 p-6">
             <div>
               <button
                 type="button"
-                onClick={() => router.push("/report")}
-                className="text-[15px] font-semibold tracking-wide text-orange-400 hover:text-orange-300"
+                onClick={() => setIsTypeModalOpen(true)}
+                className="text-[13px] font-black uppercase tracking-widest text-[#FF9F1C] hover:text-[#FF8C00]"
               >
-                <MoveLeft className="mr-2 inline-block h-5 w-5" />
+                <MoveLeft className="mr-2 inline-block h-4 w-4" />
                 CHANGE TYPE
               </button>
 
-              <h1 className="mt-2 text-[25px] font-semibold text-white">{title}</h1>
+              <h1 className="mt-3 text-xl font-black text-white">{title}</h1>
             </div>
 
             <button
               type="button"
               aria-label="Close"
               onClick={() => router.push("/report")}
-              className="rounded-lg p-2 text-white/70 hover:bg-white/5 hover:text-white"
+              className="rounded-lg p-2 text-white/50 transition-colors hover:bg-white/5 hover:text-white"
             >
               <X className="h-5 w-5" />
             </button>
           </div>
 
-          <div className="h-px w-full bg-white/15" />
+          <div className="p-8">
+            <form onSubmit={onSubmit} className="space-y-8">
+              <div className="space-y-5">
+                <p className="text-[15px] font-black text-white/45">
+                  Item Information
+                </p>
 
-          <div className="px-8 py-7">
-            <div className="text-[15px] font-semibold tracking-widest text-white/55">
-              ITEM INFORMATION
-            </div>
-
-            <div className="mt-5 grid gap-6 sm:grid-cols-2">
-              <div>
-                <label className="mb-2 block text-[20px] font-medium text-white/75">
-                  Item Name / Brand
-                </label>
-                <input
-                  value={itemName}
-                  onChange={(e) => setItemName(e.target.value)}
-                  placeholder="e.g iPhone, Key, Notebook"
-                  className="h-10 w-full rounded-xl bg-[#18263c] px-4 text-[15px] text-white/90 outline-none ring-1 ring-white/10 placeholder:text-white/40 focus:ring-white/20"
-                />
-              </div>
-
-              <div>
-                <label className="mb-2 block text-[20px] font-medium text-white/75">
-                  Category
-                </label>
-                <div className="relative">
-                  <select
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    className="h-10 w-full appearance-none rounded-xl bg-[#18263c] px-4 pr-10 text-[15px] text-white/90 outline-none ring-1 ring-white/10 focus:ring-white/20"
-                  >
-                    {CATEGORIES.map((c) => (
-                      <option key={c} value={c} className="bg-[#18263c]">
-                        {c}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/55" />
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-5">
-              <label className="mb-2 block text-[20px] font-medium text-white/75">
-                Physical Description
-              </label>
-              <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="Color, size, material, distinguishing marks..."
-                className="w-full resize-none rounded-xl bg-[#18263c] px-4 py-3 text-[15px] text-white/90 outline-none ring-1 ring-white/10 placeholder:text-white/40 focus:ring-white/20"
-              />
-            </div>
-
-            <div className="mt-8 grid gap-6 sm:grid-cols-2">
-              <div>
-                <div className="text-[12px] font-semibold tracking-widest text-white/55">
-                  TIME & LOCATION
-                </div>
-
-                <div className="mt-5">
-                  <label className="mb-2 block text-[20px] font-medium text-white/75">
-                    {dateLabel}
-                  </label>
-                  <input
-                    type="date"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                    className="h-10 w-full rounded-xl bg-[#18263c] px-4 text-[15px] text-white/90 outline-none ring-1 ring-white/10 focus:ring-white/20 scheme-dark"
-                  />
-                </div>
-
-                <div className="mt-4">
-                  <label className="mb-2 block text-[20px] font-medium text-white/75">
-                    {timeLabel}
-                  </label>
-                  <input
-                    type="time"
-                    value={time}
-                    onChange={(e) => setTime(e.target.value)}
-                    className="h-10 w-full rounded-xl bg-[#18263c] px-4 text-[15px] text-white/90 outline-none ring-1 ring-white/10 focus:ring-white/20 scheme-dark"
-                  />
-                </div>
-
-                <div className="mt-4">
-                  <label className="mb-2 block text-[20px] font-medium text-white/75">
-                    Approximate Location
-                  </label>
-                  <div className="relative">
-                    <select
-                      value={location}
-                      onChange={(e) => setLocation(e.target.value)}
-                      className="h-10 w-full appearance-none rounded-xl bg-[#18263c] px-4 pr-10 text-[15px] text-white/90 outline-none ring-1 ring-white/10 focus:ring-white/20"
-                    >
-                      {LOCATIONS.map((l) => (
-                        <option key={l} value={l} className="bg-[#18263c]">
-                          {l}
-                        </option>
-                      ))}
-                    </select>
-                    <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/55" />
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div className="text-[12px] font-semibold tracking-widest text-white/55">
-                  PHOTO
-                </div>
-
-                <label className="mt-5 flex h-53 cursor-pointer flex-col items-center justify-center rounded-2xl bg-[#22324a] ring-1 ring-white/10 hover:ring-white/20">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0] ?? null;
-                      setPhotoFile(file);
-                      setPhotoName(file ? file.name : null);
-                    }}
-                  />
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/5 ring-1 ring-white/10">
-                    <ImageIcon className="h-7 w-7 text-white/70" />
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  <div>
+                    <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                      Item Name / Brand
+                    </label>
+                    <input
+                      value={itemName}
+                      onChange={(e) => setItemName(e.target.value)}
+                      placeholder="e.g iPhone, Key, Notebook"
+                      className="w-full rounded-lg border border-white/5 bg-[#0B121E] px-5 py-3 text-sm text-white outline-none transition-colors placeholder:text-white/25 focus:border-[#FF9F1C]/50"
+                    />
                   </div>
 
-                  <div className="mt-4 text-[15px] text-white/70">
-                    {photoName ? photoName : "Click to upload photos"}
+                  <div>
+                    <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                      Category
+                    </label>
+                    <div className="relative">
+                      <select
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                        className="w-full cursor-pointer appearance-none rounded-lg border border-white/5 bg-[#0B121E] px-5 py-3 text-sm text-white outline-none transition-colors focus:border-[#FF9F1C]/50"
+                      >
+                        {CATEGORIES.map((c) => (
+                          <option key={c} value={c} className="bg-[#0B121E]">
+                            {c}
+                          </option>
+                        ))}
+                      </select>
+                      <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/45" />
+                    </div>
                   </div>
-                </label>
-              </div>
-            </div>
+                </div>
 
-            {error && (
-              <div className="mt-8 rounded-xl bg-red-500/10 px-5 py-4 text-[15px] text-red-200 ring-1 ring-red-500/30">
-                {error}
+                <div>
+                  <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                    Physical Description
+                  </label>
+                  <textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Color, size, material, distinguishing marks..."
+                    rows={3}
+                    className="w-full resize-none rounded-lg border border-white/5 bg-[#0B121E] px-5 py-3 text-sm text-white outline-none transition-colors placeholder:text-white/25 focus:border-[#FF9F1C]/50"
+                  />
+                </div>
               </div>
-            )}
 
-            <button
-              type="submit"
-              className="mt-8 h-12 w-full rounded-xl bg-orange-500 text-[15px] font-semibold text-white shadow-lg shadow-orange-500/15 hover:bg-orange-400"
-            >
-              {isEdit ? "Save Changes" : "Submit Report"}
-            </button>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div className="space-y-5">
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/45">
+                    Time &amp; Location
+                  </p>
+
+                  <div>
+                    <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                      {dateLabel}
+                    </label>
+                    <input
+                      type="date"
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
+                      className="w-full rounded-lg border border-white/5 bg-[#0B121E] px-5 py-3 text-sm text-white outline-none transition-colors focus:border-[#FF9F1C]/50"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                      {timeLabel}
+                    </label>
+                    <input
+                      type="time"
+                      value={time}
+                      onChange={(e) => setTime(e.target.value)}
+                      className="w-full rounded-lg border border-white/5 bg-[#0B121E] px-5 py-3 text-sm text-white outline-none transition-colors focus:border-[#FF9F1C]/50"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                      Approximate Location
+                    </label>
+                    <div className="relative">
+                      <select
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                        className="w-full cursor-pointer appearance-none rounded-lg border border-white/5 bg-[#0B121E] px-5 py-3 text-sm text-white outline-none transition-colors focus:border-[#FF9F1C]/50"
+                      >
+                        {LOCATIONS.map((l) => (
+                          <option key={l} value={l} className="bg-[#0B121E]">
+                            {l}
+                          </option>
+                        ))}
+                      </select>
+                      <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/45" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-5">
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/45">Photo</p>
+
+                  <label className="flex aspect-square cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-white/10 bg-[#0B121E] transition-colors hover:bg-white/2">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0] ?? null;
+                        setPhotoFile(file);
+                        setPhotoName(file ? file.name : null);
+                      }}
+                    />
+                    <div className="rounded-full bg-white/5 p-4">
+                      <ImageIcon className="h-7 w-7 text-white/40" />
+                    </div>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-white/45">
+                      {photoName ? photoName : "Click to upload photo"}
+                    </p>
+                  </label>
+                </div>
+              </div>
+
+              {error && (
+                <div className="rounded-lg bg-red-500/10 px-5 py-3 text-sm text-red-200 ring-1 ring-red-500/30">
+                  {error}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                className="w-full rounded-xl bg-[#FF9F1C] py-4 text-[11px] font-black uppercase tracking-widest text-black transition-colors hover:bg-[#FF8C00] active:scale-[0.99]"
+              >
+                {isEdit ? "Update Report" : "Submit Report"}
+              </button>
+            </form>
           </div>
-        </form>
+        </div>
       </main>
+
+      <ReportTypeModal
+        open={isTypeModalOpen}
+        onClose={() => setIsTypeModalOpen(false)}
+        onSelect={handleTypeChange}
+      />
     </div>
   );
 }

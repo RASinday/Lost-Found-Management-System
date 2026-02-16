@@ -1,4 +1,4 @@
-  // app/admin/page.tsx
+// app/admin/page.tsx
   "use client";
 
   import React, { useMemo, useState, useRef } from "react";
@@ -26,6 +26,7 @@
   import { SelectField, TextArea, TextField } from "@/components/admin/fields";
   import {
     CATEGORIES,
+    LOCATIONS, // ✅ add this
     ROLES,
     ReportRow,
     UserRow,
@@ -47,9 +48,9 @@
 
     const [searchQuery, setSearchQuery] = useState("");
     const [reportTypeFilter, setReportTypeFilter] = useState<"ALL TYPES" | "Lost" | "Found">("ALL TYPES");
-  const [reportStatusFilter, setReportStatusFilter] = useState<
-    "ALL STATUS" | "PENDING" | "APPROVED" | "CLAIMED" | "REJECTED"
-  >("ALL STATUS");
+    const [reportStatusFilter, setReportStatusFilter] = useState<
+      "ALL STATUS" | "PENDING" | "APPROVED" | "CLAIMED" | "REJECTED"
+    >("ALL STATUS");
 
     const [userRoleFilter, setUserRoleFilter] = useState<"ALL TYPES" | string>("ALL TYPES");
     const [userStatusFilter, setUserStatusFilter] = useState<"ALL STATUS" | "Active" | "Banned">("ALL STATUS");
@@ -130,11 +131,12 @@
         location: (fd.get("location") as string) || "",
         date: (fd.get("date") as string) || "",
         time: (fd.get("time") as string) || "",
-        status: "PENDING",
+        status: ((fd.get("status") as ReportRow["status"]) || "PENDING"), // ✅ changed
       };
 
       setReports((prev) => [next, ...prev]);
       setOpenAddReport(false);
+      setImagePreview(null); // ✅ clear after submit
       toast.success("New report filed successfully");
     };
 
@@ -148,6 +150,9 @@
         name: (fd.get("name") as string) || editReport.name,
         category: (fd.get("category") as string) || editReport.category,
         description: (fd.get("description") as string) || editReport.description,
+        type: (fd.get("type") as "Lost" | "Found") || editReport.type,
+        status:
+          (fd.get("status") as ReportRow["status"]) || editReport.status,
         location: (fd.get("location") as string) || editReport.location,
         date: (fd.get("date") as string) || editReport.date,
         time: (fd.get("time") as string) || editReport.time,
@@ -155,6 +160,7 @@
 
       setReports((prev) => prev.map((r) => (r.id === editReport.id ? updated : r)));
       setEditReport(null);
+      setImagePreview(null);
       toast.success("Report updated successfully");
     };
 
@@ -315,7 +321,10 @@
 
               <button
                 type="button"
-                onClick={() => (tab === "reports" ? setOpenAddReport(true) : setOpenAddUser(true))}
+                onClick={() => {
+                  setImagePreview(null); // ✅ clear when opening
+                  tab === "reports" ? setOpenAddReport(true) : setOpenAddUser(true);
+                }}
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#FF9F1C] px-6 py-3 text-[11px] font-black uppercase tracking-widest text-black transition-colors hover:bg-[#FF8C00] active:scale-[0.99]"
               >
                 {tab === "reports" ? <PlusCircle size={16} /> : <UserPlus size={16} />}
@@ -452,7 +461,10 @@
         <Modal
           title="File Report"
           open={openAddReport}
-          onClose={() => setOpenAddReport(false)}
+          onClose={() => {
+            setOpenAddReport(false);
+            setImagePreview(null); // ✅ clear on close
+          }}
           width="max-w-2xl"
         >
           <form className="space-y-8" onSubmit={addReport}>
@@ -473,6 +485,13 @@
               />
 
               <SelectField label="Report Type" name="type" options={["Lost", "Found"]} />
+
+              <SelectField
+                label="Report Status"
+                name="status"
+                options={["PENDING", "APPROVED", "CLAIMED", "REJECTED"]}
+                defaultValue="PENDING"
+              />
             </div>
 
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -491,20 +510,57 @@
                   <Clock className="pointer-events-none absolute right-4 bottom-3.5 text-white/25" size={16} />
                 </div>
 
-                <TextField label="Approximate Location" name="location" required placeholder="e.g., Canteen, Gym" />
+                <SelectField
+                  label="Approximate Location"
+                  name="location"
+                  options={LOCATIONS}
+                />
               </div>
 
               <div className="space-y-5">
                 <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/45">
                   Photo
                 </p>
-                <div className="flex aspect-square cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-white/10 bg-[#0B121E] transition-colors hover:bg-white/[0.02]">
-                  <div className="rounded-full bg-white/5 p-4">
-                    <Camera className="text-white/40" size={28} />
-                  </div>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-white/45">
-                    Click to upload photo
-                  </p>
+
+                <div
+                  onClick={triggerFileInput}
+                  className="group relative flex aspect-square cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-[#0B121E] transition-all hover:border-white/20 hover:bg-white/[0.02]"
+                >
+                  {imagePreview ? (
+                    <>
+                      <img
+                        src={imagePreview}
+                        alt="Evidence"
+                        className="h-full w-full object-cover opacity-90 transition-opacity group-hover:opacity-50"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
+                        <div className="rounded-full bg-black/50 p-3 text-white backdrop-blur-sm">
+                          <Camera size={24} />
+                        </div>
+                      </div>
+                      <p className="absolute bottom-5 text-[10px] font-bold uppercase tracking-widest text-white/60">
+                        Click to replace photo
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <div className="mb-3 rounded-full bg-white/5 p-4 transition-colors group-hover:bg-white/10">
+                        <Camera className="text-white/40 transition-colors group-hover:text-white/80" size={28} />
+                      </div>
+                      <p className="mt-3 text-[10px] font-bold uppercase tracking-widest text-white/45 transition-colors group-hover:text-white/70">
+                        Click to upload photo
+                      </p>
+                    </>
+                  )}
+
+                  <input
+                    type="file"
+                    name="photo"
+                    ref={fileInputRef}
+                    className="hidden"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                  />
                 </div>
               </div>
             </div>
@@ -535,11 +591,27 @@
                 <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/45">
                   Item Information
                 </p>
+
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <TextField label="Item Name / Brand" name="name" required defaultValue={editReport.name} />
                   <SelectField label="Category" name="category" options={CATEGORIES} defaultValue={editReport.category} />
                 </div>
+
                 <TextArea label="Physical Description" name="description" defaultValue={editReport.description} />
+
+                <SelectField
+                  label="Report Type"
+                  name="type"
+                  options={["Lost", "Found"]}
+                  defaultValue={editReport.type}
+                />
+
+                <SelectField
+                  label="Report Status"
+                  name="status"
+                  options={["PENDING", "APPROVED", "CLAIMED", "REJECTED"]}
+                  defaultValue={editReport.status}
+                />
               </div>
 
               {/* Middle Section: Location & Photo */}
@@ -570,41 +642,42 @@
                     Photo Evidence
                   </p>
                   
-                  <div 
+                  <div
                     onClick={triggerFileInput}
                     className="group relative flex aspect-square cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-[#0B121E] transition-all hover:border-white/20 hover:bg-white/[0.02]"
                   >
                     {imagePreview ? (
-                      // SHOW IMAGE PREVIEW
                       <>
-                        <img 
-                          src={imagePreview} 
-                          alt="Evidence" 
-                          className="h-full w-full object-cover opacity-90 transition-opacity group-hover:opacity-50" 
+                        <img
+                          src={imagePreview}
+                          alt="Evidence"
+                          className="h-full w-full object-cover opacity-90 transition-opacity group-hover:opacity-50"
                         />
                         <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
-                           <div className="rounded-full bg-black/50 p-3 text-white backdrop-blur-sm">
-                              <Camera size={24} />
-                           </div>
+                          <div className="rounded-full bg-black/50 p-3 text-white backdrop-blur-sm">
+                            <Camera size={24} />
+                          </div>
                         </div>
-                      </>
-                    ) : (
-                      // SHOW UPLOAD PLACEHOLDER
-                      <>
-                        <div className="mb-3 rounded-full bg-white/5 p-4 transition-colors group-hover:bg-white/10">
-                          <Camera className="text-white/40 transition-colors group-hover:text-white/80" size={32} />
-                        </div>
-                        <p className="text-[10px] font-bold uppercase tracking-widest text-white/45 transition-colors group-hover:text-white/70">
+                        <p className="absolute bottom-5 text-[10px] font-bold uppercase tracking-widest text-white/60">
                           Click to replace photo
                         </p>
                       </>
+                    ) : (
+                      <>
+                        <div className="mb-3 rounded-full bg-white/5 p-4 transition-colors group-hover:bg-white/10">
+                          <Camera className="text-white/40 transition-colors group-hover:text-white/80" size={28} />
+                        </div>
+                        <p className="mt-3 text-[10px] font-bold uppercase tracking-widest text-white/45 transition-colors group-hover:text-white/70">
+                          Click to upload photo
+                        </p>
+                      </>
                     )}
-                    
-                    {/* Hidden Input */}
-                    <input 
-                      type="file" 
+
+                    <input
+                      type="file"
+                      name="photo"
                       ref={fileInputRef}
-                      className="hidden" 
+                      className="hidden"
                       accept="image/*"
                       onChange={handleImageChange}
                     />

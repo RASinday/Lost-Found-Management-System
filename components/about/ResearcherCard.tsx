@@ -19,13 +19,13 @@ export function ResearcherCard({ name, imageSrc, email }: ResearcherCardProps) {
         />
       </div>
       <div className="text-center text-slate-50">
-        <p className="text-sm font-semibold transition-colors duration-200 group-hover:text-amber-400">
+        <p className="text-[15px] font-semibold transition-colors duration-200 group-hover:text-amber-400">
           {name}
         </p>
         {email && (
           <a
             href={`mailto:${email}`}
-            className="mt-1 block break-all text-xs text-sky-300 transition-colors duration-200 group-hover:text-sky-200"
+            className="mt-1 block break-all text-[10px] text-sky-300 transition-colors duration-200 group-hover:text-sky-200"
           >
             {email}
           </a>

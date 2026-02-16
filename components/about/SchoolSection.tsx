@@ -4,7 +4,7 @@ export default function SchoolSection() {
   return (
     <section className="relative mt-12">
       {/* group enables hover on the whole card */}
-      <div className="group relative mx-auto max-w-6xl h-64 md:h-[360px] lg:h-[420px] overflow-hidden rounded-3xl">
+      <div className="group relative mx-auto max-w-6xl h-64 md:h-90 lg:h-105 overflow-hidden rounded-3xl">
         {/* background layer with zoom effect */}
         <div
           className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-105"
@@ -31,16 +31,16 @@ export default function SchoolSection() {
                 height={24}
                 className="shrink-0 w-5 h-5"
               />
-              <span className="text-[1.0rem] font-semibold tracking-[0.18em] uppercase">
+              <span className="text-[15px] font-semibold tracking-[0.18em] uppercase">
                 Our Institution
               </span>
             </div>
 
-            <h2 className="text-2xl md:text-3xl font-semibold">
+            <h2 className="text-[20px] font-semibold">
               Hilongos National Vocational School
             </h2>
 
-            <p className="mt-4 text-xs md:text-sm leading-relaxed">
+            <p className="mt-4 text-[13px] leading-relaxed">
               The institution supports integrity, responsibility, and digital
               innovation by implementing systems like HNVSearch to improve
               student services and campus management. HNVS is committed to

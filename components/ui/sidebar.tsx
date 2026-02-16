@@ -139,7 +139,7 @@ export function SidebarTrigger({
       {...props}
     >
       {children ?? (
-        <span className="block h-[2px] w-5 bg-current relative before:absolute before:-top-1.5 before:h-[2px] before:w-5 before:bg-current after:absolute after:top-1.5 after:h-[2px] after:w-5 after:bg-current" />
+        <span className="block h-0.5 w-5 bg-current relative before:absolute before:-top-1.5 before:h-0.5 before:w-5 before:bg-current after:absolute after:top-1.5 after:h-0.5 after:w-5 after:bg-current" />
       )}
     </button>
   );
