@@ -22,7 +22,8 @@ const CATEGORIES = [
   "Picture",
   "Clothing",
   "Footwear",
-  "Other"];
+  "Other"
+];
 
 const LOCATIONS = [
   "JHS Guard House",
