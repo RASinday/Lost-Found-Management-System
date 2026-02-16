@@ -38,7 +38,7 @@ export default function ContactPage() {
           <h1 className="text-5xl md:text-6xl font-bold mb-4">
             Contact <span className="text-orange-500">Information</span>
           </h1>
-          <p className="text-gray-400">For inquiries, verification, or claiming of items, you may contact our dedicated team within school hours.</p>
+          <p className=" text-[15px] text-gray-400">For inquiries, verification, or claiming of items, you may contact our dedicated team within school hours.</p>
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
@@ -46,31 +46,31 @@ export default function ContactPage() {
           {/* LEFT COLUMN: STAFF INFO + OFFICE HOURS */}
           <div className="space-y-8">
             <section className="bg-[#1e2b44] rounded-2xl p-8 border border-white/10 shadow-xl">
-              <h3 className="mb-6 flex items-center gap-2 text-orange-400 font-semibold">
+              <h3 className="mb-6 text-[20px] flex items-center gap-2 text-orange-400 font-semibold">
                  <User size={20}/> Lost and Found Coordinator's Information
               </h3>
               <div className="space-y-6">
                 {staff.map((person) => (
                   <div key={person.role} className="group border-b border-white/5 pb-4 last:border-0">
-                    <p className="text-[10px] text-gray-500 uppercase tracking-wider group-hover:text-orange-500/70 transition-colors">
+                    <p className="text-[15px] text-gray-500 uppercase tracking-wider group-hover:text-orange-500/70 transition-colors">
                       {person.role} NAME
                     </p>
-                    <p className="text-lg font-medium group-hover:text-orange-500 transition-colors duration-300">
+                    <p className="text-[20px] font-medium group-hover:text-orange-500 transition-colors duration-300">
                       {person.name}
                     </p>
                   </div>
                 ))}
                 
                 <div className="pt-4 space-y-4 border-t border-white/10">
-                   <div className="flex gap-3 items-start text-sm text-gray-400 group">
-                      <MapPin size={16} className="mt-1 text-orange-500" />
+                   <div className="flex gap-3 items-start text-[15px] text-gray-400 group">
+                      <MapPin size={16} className=" text-orange-500" />
                       <span className="group-hover:text-white transition-colors">OFFICE: [Supreme Secondary Learner Government]</span>
                    </div>
-                   <div className="flex gap-3 items-start text-sm text-gray-400 group">
+                   <div className="flex gap-3 items-start text-[15px] text-gray-400 group">
                       <Phone size={16} className="mt-1 text-orange-500" />
                       <span className="group-hover:text-white transition-colors">CONTACT: [0970 689 0304]</span>
                    </div>
-                   <div className="flex gap-3 items-start text-sm text-gray-400 group">
+                   <div className="flex gap-3 items-start text-[15px] text-gray-400 group">
                       <Mail size={16} className="mt-1 text-orange-500" />
                       <span className="group-hover:text-white transition-colors">EMAIL: [sslghnvs@gmail.com]</span>
                    </div>
@@ -81,7 +81,7 @@ export default function ContactPage() {
             {/* OFFICE HOURS (Now below Staff Info) */}
             <section className="bg-[#1e2b44] rounded-2xl p-8 border border-white/10 shadow-xl">
                <div className="flex justify-between items-center mb-6">
-                 <h3 className="flex items-center gap-2 font-semibold">
+                 <h3 className="flex items-center gap-2 text-[20px]   text-orange-400 font-semibold">
                     <Clock className="text-orange-500" size={18}/> Office Hours
                  </h3>
                  <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5 ${isOpen ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
@@ -90,8 +90,8 @@ export default function ContactPage() {
                  </span>
                </div>
                <div className="bg-[#0a1120] p-5 rounded-xl border border-white/5 flex justify-between items-center">
-                  <span className="text-gray-300 font-medium">Monday - Friday</span>
-                  <span className="text-orange-500 font-bold text-lg">7:00 AM - 5:00 PM</span>
+                  <span className="text-gray-300 text-[15px] ">Monday - Friday</span>
+                  <span className="text-orange-500 font-bold text-[15px] ">7:00 AM - 5:00 PM</span>
                </div>
             </section>
           </div>
@@ -99,7 +99,7 @@ export default function ContactPage() {
           {/* RIGHT COLUMN: VISUAL AREAS */}
           <div className="space-y-8">
             <section className="bg-[#1e2b44] rounded-2xl p-8 border border-white/10 shadow-xl">
-               <h3 className="mb-6 flex items-center gap-2 font-semibold">
+               <h3 className="mb-6 flex items-center gap-2 text-[20px] text-orange-400 font-semibold">
                   <MapPin className="text-orange-500" size={18}/> Designated Drop Off Areas
                </h3>
                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -115,7 +115,7 @@ export default function ContactPage() {
             </section>
 
             <section className="bg-[#1e2b44] rounded-2xl p-8 border border-white/10 shadow-xl">
-               <h3 className="mb-6 flex items-center gap-2 font-semibold">
+               <h3 className="mb-6 flex items-center gap-2 text-[20px] text-orange-400 font-semibold">
                   <CheckCircle2 className="text-orange-500" size={18}/> Designated Claiming Areas
                </h3>
                <div className="relative group cursor-pointer overflow-hidden rounded-lg aspect-video bg-black/40 border border-white/10" onClick={() => setSelectedImg("/sslg_main.png")}>
@@ -124,7 +124,7 @@ export default function ContactPage() {
                      <Maximize2 className="text-orange-500" size={24} />
                   </div>
                </div>
-               <p className="text-[11px] text-gray-500 mt-4 italic text-center">Closed on Weekend and Public Holidays</p>
+               <p className="text-[15px] text-gray-500 mt-4 italic text-center">Closed on Weekend and Public Holidays</p>
             </section>
           </div>
         </div>
@@ -133,7 +133,7 @@ export default function ContactPage() {
       {/* LIGHTBOX MODAL */}
       <AnimatePresence>
         {selectedImg && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelectedImg(null)} className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 cursor-zoom-out">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelectedImg(null)} className="fixed inset-0 z-100 bg-black/95 flex items-center justify-center p-4 cursor-zoom-out">
             <motion.img initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }} src={selectedImg} className="max-w-full max-h-[85vh] rounded-xl shadow-2xl border border-white/10" />
           </motion.div>
         )}
