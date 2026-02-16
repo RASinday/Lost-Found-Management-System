@@ -35,7 +35,7 @@ export default function HomePage() {
       {/* ================= HERO / HOME SECTION ================= */}
       <div className="relative min-h-screen w-full overflow-hidden bg-slate-950 text-white">
         <Image
-          src="/HNVS.png"
+          src="/HNVS1.png"
           alt="HNVS campus background"
           fill
           priority
@@ -66,7 +66,7 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <p className="mt-40 text-sm sm:text-base md:text-lg lg:text-[22px] xl:text-[25px] leading-6 sm:leading-7 md:leading-8 text-white/75 px-4">
+            <p className="mt-55 text-sm sm:text-base md:text-lg lg:text-[22px] xl:text-[25px] leading-6 sm:leading-7 md:leading-8 text-white/75 px-4">
               HNVSearch is designed to help students, teachers, and staff easily
               <br className="hidden md:block" />
               report, search, and recover lost or found items within the school premises.
@@ -82,7 +82,7 @@ export default function HomePage() {
       {/* ================= OUR PURPOSE SECTION ================= */}
       <section className="w-full bg-[#2f4b78] py-10 text-white">
         <div className="mx-auto w-full max-w-500 px-4 sm:px-6 md:px-8 lg:px-10">
-          <h2 className="mb-8 sm:mb-10 md:mb-12 text-center text-2xl sm:text-3xl md:text-[40px] font-semibold">
+          <h2 className="mb-8 sm:mb-10 md:mb-12 text-center text-2xl sm:text-3xl md:text-[35px] font-semibold">
             OUR PURPOSE
           </h2>
 

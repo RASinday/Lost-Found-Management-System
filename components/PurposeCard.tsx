@@ -1,40 +1,33 @@
-import { Card, CardContent } from "@/components/ui/card";
+import React from "react";
 
 interface PurposeCardProps {
   icon: React.ReactNode;
   title: string;
   description: string;
-  highlighted?: boolean;
 }
 
-export default function PurposeCard({
+const PurposeCard: React.FC<PurposeCardProps> = ({
   icon,
   title,
   description,
-  highlighted = false,
-}: PurposeCardProps) {
+}) => {
   return (
-    <Card
-      className={[
-        "bg-[#405b82] text-white rounded-2xl",
-        "w-full h-full min-h-75 sm:min-h-87.5",
-        "shadow-md shadow-black/20",
-        highlighted ? "border border-amber-400/80" : "border border-white/10",
-      ].join(" ")}
-    >
-      <CardContent className="flex h-full flex-col p-6 sm:p-8 md:p-10">
-        <div className="mb-4 sm:mb-6 md:mb-10 flex h-12 w-12 sm:h-16 sm:w-16 md:h-20 md:w-20 items-center justify-center rounded-lg bg-[#1f2f4d]">
+    <div className="group relative overflow-hidden rounded-3xl bg-white/5 p-8 backdrop-blur-sm transition-all duration-500 hover:scale-110 hover:bg-white/10 hover:shadow-2xl hover:shadow-blue-500/30">
+      <div className="mb-6 inline-flex rounded-2xl bg-blue-500/10 p-4 transition-all duration-500 group-hover:scale-125 group-hover:bg-blue-500/20 group-hover:shadow-xl group-hover:shadow-blue-500/60">
+        <div className="text-3xl text-yellow-400 transition-transform duration-500 group-hover:scale-125">
           {icon}
         </div>
-
-        <h3 className="text-base sm:text-lg md:text-[20px] font-semibold leading-snug">
+      </div>
+      <div className="space-y-4">
+        <h3 className="min-h-13 text-[20px] font-semibold leading-snug text-white transition-colors duration-300 group-hover:text-blue-300">
           {title}
         </h3>
-
-        <p className="mt-4 sm:mt-5 md:mt-6 text-sm sm:text-[15px] leading-6 sm:leading-7 text-white/80">
+        <p className="min-h-18 text-[15px] leading-7 text-gray-300 transition-colors duration-300 group-hover:text-gray-100">
           {description}
         </p>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
-}
+};
+
+export default PurposeCard;

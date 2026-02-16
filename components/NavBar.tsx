@@ -1,62 +1,63 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import {Search} from "lucide-react";
-const navLinks = [
-  { label: "Home", href: "/home" },
-  { label: "Report", href: "/report" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
+import Image from "next/image";
+import { Search, Home, FileText, Info, Mail, Menu, LogIn } from "lucide-react";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 export default function TopBar() {
-  const pathname = usePathname();
-
   return (
     <header className="sticky top-0 z-50">
       <div className="h-18 bg-[#294372]">
-        <nav className="mx-auto flex h-full w-full max-w-550 items-center justify-between px-10">
-          {/* Brand */}
-          <Link href="/home" className="text-[26px] font-medium tracking-wide">
-            <Search className="h-15 inline-block mr-3 text-orange-300" />
+        <nav className="mx-auto flex h-full w-full items-center justify-between px-4 sm:px-10 gap-8">
+          {/* LEFT: Brand */}
+          <Link
+            href="/home"
+            className="flex items-center text-[25px] font-medium tracking-wide shrink-0"
+          >
+            <Image src="/HNVSearchLogo.png" alt="HNVSearchLogo" width={40} height={40} className="mr-2" />
             <span className="text-white">HNV</span>
             <span className="text-orange-300">Search</span>
           </Link>
 
-          {/* Navigation */}
-          <ul className="hidden items-center gap-20 md:flex">
-            {navLinks.map((link) => {
-              const isActive = pathname.startsWith(link.href);
+          {/* RIGHT: Desktop nav + Log in */}
+          <div className="hidden md:flex items-center gap-8">
+            {/* Navigation links */}
+            <div className="flex items-center gap-8 text-[15px] font-medium text-white/90">
+              <Link href="/home" className="flex items-center gap-2 hover:text-white transition-colors">
+                <Home size={18} />
+                Home
+              </Link>
+              <Link href="/report" className="flex items-center gap-2 hover:text-white transition-colors">
+                <FileText size={18} />
+                Report
+              </Link>
+              <Link href="/about" className="flex items-center gap-2 hover:text-white transition-colors">
+                <Info size={18} />
+                About
+              </Link>
+              <Link href="/contact" className="flex items-center gap-2 hover:text-white transition-colors">
+                <Mail size={18} />
+                Contact
+              </Link>
+            </div>
 
-              return (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className={[
-                      "relative text-[16px] font-medium transition-colors",
-                      isActive
-                        ? "text-orange-300"
-                        : "text-white/90 hover:text-white",
-                    ].join(" ")}
-                  >
-                    {link.label}
-                    {isActive && (
-                      <span className="absolute -bottom-2 left-0 h-0.75 w-full bg-orange-300" />
-                    )}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+            {/* Log in button */}
+            <Link
+              href="/login"
+              className="rounded-[10px] bg-orange-500 px-5 py-1.5 text-[15px] font-semibold text-white hover:bg-orange-600 shrink-0 items-center gap-2 flex"
+            >
+              <LogIn size={18} />
+              Log in
+            </Link>
+         </div>
 
-          {/* Login */}
-          <Link
-            href="/login"
-            className="text-[16px] font-medium text-white/90 hover:text-white"
-          >
-            Log in
-          </Link>
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <SidebarTrigger className="flex items-center gap-2 text-white hover:text-orange-300 transition-colors">
+              <Menu size={20} />
+            </SidebarTrigger>
+          </div>
         </nav>
       </div>
     </header>
