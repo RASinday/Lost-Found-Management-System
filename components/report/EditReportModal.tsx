@@ -188,8 +188,8 @@ export default function EditReportModal({
         <div className="p-8">
           <div className="space-y-8">
             <div className="space-y-5">
-              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/45">
-                Item Information
+              <p className="text-[15px] font-black text-white/45">
+                ITEM INFORMATION
               </p>
 
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

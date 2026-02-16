@@ -29,16 +29,16 @@ export default function ReportTypeModal({ open, onClose, onSelect }: Props) {
 
       {/* Modal container */}
       <div className="relative z-101 w-full max-w-200 rounded-[30px] bg-[#22324a] p-10 shadow-2xl ring-1 ring-white/10">
-        <h2 className="text-center text-[30px] font-semibold text-white">
+        <h2 className="text-center text-[25px] font-semibold text-white">
           What would you like to report?
         </h2>
 
-        <div className="mt-10 grid gap-8 md:grid-cols-2">
+        <div className="mt-7 grid gap-8 md:grid-cols-2">
           <button
             onClick={() => handleSelect("lost")}
             className="group flex flex-col items-center rounded-2xl bg-[#18263c] p-8 text-center ring-1 ring-white/10 transition hover:ring-white/20"
           >
-            <div className="mb-10 flex h-15 w-15 items-center justify-center rounded-2xl bg-red-500/20 ring-1 ring-red-500/40">
+            <div className="mb-8 flex h-15 w-15 items-center justify-center rounded-2xl bg-red-500/20 ring-1 ring-red-500/40">
               <AlertCircle className="h-8 w-8 text-red-400" />
             </div>
 
@@ -55,7 +55,7 @@ export default function ReportTypeModal({ open, onClose, onSelect }: Props) {
             onClick={() => handleSelect("found")}
             className="group flex flex-col items-center rounded-2xl bg-[#18263c] p-8 text-center ring-1 ring-white/10 transition hover:ring-white/20"
           >
-            <div className="mb-10 flex h-15 w-15 items-center justify-center rounded-2xl bg-emerald-500/20 ring-1 ring-emerald-500/40">
+            <div className="mb-8 flex h-15 w-15 items-center justify-center rounded-2xl bg-emerald-500/20 ring-1 ring-emerald-500/40">
               <CheckCircle2 className="h-8 w-8 text-emerald-400" />
             </div>
 

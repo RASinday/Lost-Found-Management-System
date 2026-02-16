@@ -6,6 +6,7 @@ import { MoveLeft, ChevronDown, Image as ImageIcon, X } from "lucide-react";
 
 import type { Item, Status } from "@/lib/types";
 import { addTempReport, updateTempItem, getTempItems } from "@/lib/tempReportsStore";
+import ReportTypeModal, { type ReportType as ReportTypeEnum } from "./ReportTypeModal";
 
 type ReportType = "lost" | "found";
 
@@ -137,6 +138,14 @@ export default function ReportFormPage({
   // Error state for validation
   const [error, setError] = useState<string>("");
 
+  // Type modal state
+  const [isTypeModalOpen, setIsTypeModalOpen] = useState(false);
+
+  const handleTypeChange = (newType: ReportTypeEnum) => {
+    setIsTypeModalOpen(false);
+    router.push(`/report/${newType}`);
+  };
+
   // Prefill on edit
   useEffect(() => {
     if (!isEdit) return;
@@ -258,7 +267,7 @@ export default function ReportFormPage({
             <div>
               <button
                 type="button"
-                onClick={() => router.push("/report")}
+                onClick={() => setIsTypeModalOpen(true)}
                 className="text-[13px] font-black uppercase tracking-widest text-[#FF9F1C] hover:text-[#FF8C00]"
               >
                 <MoveLeft className="mr-2 inline-block h-4 w-4" />
@@ -281,7 +290,7 @@ export default function ReportFormPage({
           <div className="p-8">
             <form onSubmit={onSubmit} className="space-y-8">
               <div className="space-y-5">
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/45">
+                <p className="text-[15px] font-black text-white/45">
                   Item Information
                 </p>
 
@@ -424,6 +433,12 @@ export default function ReportFormPage({
           </div>
         </div>
       </main>
+
+      <ReportTypeModal
+        open={isTypeModalOpen}
+        onClose={() => setIsTypeModalOpen(false)}
+        onSelect={handleTypeChange}
+      />
     </div>
   );
 }
