@@ -11,7 +11,7 @@ export default function TagPill({ tag }: { tag: Status }) {
   return (
     <span
       className={[
-        "rounded-full px-2.5 py-1 text-[10px] font-semibold text-white uppercase",
+        "rounded-full px-2.5 py-1 text-[8px] font-semibold text-white uppercase",
         styles[tag],
       ].join(" ")}
     >

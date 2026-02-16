@@ -4,7 +4,7 @@ export default function SchoolSection() {
   return (
     <section className="relative mt-12">
       {/* group enables hover on the whole card */}
-      <div className="group relative mx-auto max-w-6xl h-64 md:h-[360px] lg:h-[420px] overflow-hidden rounded-3xl">
+      <div className="group relative mx-auto max-w-6xl h-64 md:h-90 lg:h-105 overflow-hidden rounded-3xl">
         {/* background layer with zoom effect */}
         <div
           className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-105"

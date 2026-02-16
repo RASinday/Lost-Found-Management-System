@@ -26,7 +26,7 @@ export function ReportFilters({
       <div className="md:hidden">
         <div className="relative">
           <select
-            className="w-full appearance-none rounded-xl border border-slate-700 bg-[#020817] px-4 py-3 pr-10 text-lg font-semibold text-slate-100"
+            className="w-full appearance-none rounded-xl border border-slate-700 bg-[#020817] px-4 py-4 pr-10 text-xl font-semibold text-slate-100"
             value={value}
             onChange={(e) => onChange(e.target.value as ReportFilter)}
           >
@@ -53,7 +53,7 @@ export function ReportFilters({
               key={f.key}
               type="button"
               onClick={() => onChange(f.key)}
-              className={`rounded-full px-6 py-2 text-sm font-semibold transition-colors
+              className={`rounded-full px-7 py-3 text-base font-semibold transition-colors
                 ${
                   active
                     ? "bg-[#294372] text-white"

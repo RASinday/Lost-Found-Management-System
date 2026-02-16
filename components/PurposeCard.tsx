@@ -18,12 +18,14 @@ const PurposeCard: React.FC<PurposeCardProps> = ({
           {icon}
         </div>
       </div>
-      <h3 className="mb-4 text-xl font-semibold text-white transition-colors duration-300 group-hover:text-blue-300">
-        {title}
-      </h3>
-      <p className="text-sm leading-relaxed text-gray-300 transition-colors duration-300 group-hover:text-gray-100">
-        {description}
-      </p>
+      <div className="space-y-4">
+        <h3 className="min-h-13 text-[20px] font-semibold leading-snug text-white transition-colors duration-300 group-hover:text-blue-300">
+          {title}
+        </h3>
+        <p className="min-h-18 text-[15px] leading-7 text-gray-300 transition-colors duration-300 group-hover:text-gray-100">
+          {description}
+        </p>
+      </div>
     </div>
   );
 };

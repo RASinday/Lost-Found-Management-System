@@ -10,6 +10,12 @@ export default function ItemCard({
   item: Item;
   onOpen: () => void;
 }) {
+  const displayDescription = (() => {
+    const raw = item.desc ?? "";
+    const match = raw.match(/^Category:\s.*(?:\r?\n\r?\n|\r?\n)?([\s\S]*)$/);
+    return (match ? match[1] : raw).trimStart();
+  })();
+
   return (
     <div
       onClick={onOpen}
@@ -21,7 +27,7 @@ export default function ItemCard({
       className="group cursor-pointer overflow-hidden rounded-2xl bg-[#223555] shadow-xl ring-1 ring-white/10"
     >
       {/* Image */}
-      <div className="relative h-80 w-full overflow-hidden bg-white/5">
+      <div className="relative h-60 w-full overflow-hidden bg-white/5">
         {item.image ? (
           <Image
             src={item.image}
@@ -31,7 +37,7 @@ export default function ItemCard({
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-white">
-            <span className="text-black/40 text-[20px]">No image</span>
+            <span className="text-black/40 text-[15px]">No image</span>
           </div>
         )}
 
@@ -44,43 +50,45 @@ export default function ItemCard({
       </div>
 
       {/* Body */}
-      <div className="mt-2 p-6">
-        {/* Top row: title + icon */}
-        <div className="flex items-start justify-between gap-4">
-          <h3 className="text-[25px] font-semibold text-white leading-snug">
-            {item.title}
-          </h3>
+      <div className="p-5">
+        <div className="space-y-4">
+          {/* Top row: title + icon */}
+          <div className="flex items-start justify-between gap-3">
+            <h3 className="text-[20px] font-semibold text-white leading-snug">
+              {item.title}
+            </h3>
 
-          {/* Keep your icon, but make it open the modal too */}
-          <button
-            type="button"
-            className="grid h-15 w-15 shrink-0 place-items-center"
-            aria-label="More"
-            onClick={(e) => {
-              e.stopPropagation();
-              onOpen();
-            }}
-          >
-            <Tag className="h-7 w-7" />
-          </button>
-        </div>
-
-        <p className="mt-5 text-[20px] text-white/70 leading-7 line-clamp-2 min-h-30">
-          {item.desc}
-        </p>
-
-        <div className="my-3 h-px w-full bg-white/10" />
-
-        <div className="space-y-2 text-left text-[20px] leading-7 text-white/60 min-h-40">
-          <div className="flex items-center gap-2">
-            <MapPin className="h-10 w-7 text-amber-400" />
-            <span>{item.location}</span>
+            {/* Keep your icon, but make it open the modal too */}
+            <button
+              type="button"
+              className="grid h-10 w-10 shrink-0 place-items-center"
+              aria-label="More"
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpen();
+              }}
+            >
+              <Tag className="h-5 w-5" />
+            </button>
           </div>
-          <div className="flex items-center gap-2">
-            <Clock className="h-10 w-7 text-amber-400" />
-            <span>
-              {item.date} | {item.time}
-            </span>
+
+          <p className="text-[15px] text-white/70 leading-7 line-clamp-2 min-h-30">
+            {displayDescription}
+          </p>
+
+          <div className="h-px w-full bg-white/10" />
+
+          <div className="space-y-2 text-left text-[13px] leading-7 text-white/60 min-h-30">
+            <div className="flex items-center gap-2">
+              <MapPin className="h-5 w-5 text-amber-400" />
+              <span>{item.location}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock className="h-5 w-5 text-amber-400" />
+              <span>
+                {item.date} | {item.time}
+              </span>
+            </div>
           </div>
         </div>
 

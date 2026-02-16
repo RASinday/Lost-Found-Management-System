@@ -168,160 +168,159 @@ export default function EditReportModal({
   }
 
   return (
-    <div className="fixed inset-0 z-500 flex items-center justify-center px-6 py-10">
-      <button
-        className="absolute inset-0 bg-black/60 backdrop-blur-md"
-        onClick={onClose}
-        aria-label="Close edit modal"
-      />
+    <div className="fixed inset-0 z-500 flex items-center justify-center p-4">
+      <button className="absolute inset-0 bg-black/70" onClick={onClose} aria-label="Close edit modal" />
 
-      <div className="relative z-501 w-full max-w-230 overflow-hidden rounded-[22px] bg-[#22324a] shadow-2xl ring-1 ring-white/10">
-        <div className="flex items-start justify-between px-10 py-8">
-          <h1 className="text-[28px] font-semibold text-white">Edit report</h1>
+      <div className="relative z-501 w-full max-w-2xl overflow-hidden rounded-2xl border border-white/10 bg-[#151F2E]">
+        <div className="flex items-center justify-between border-b border-white/5 p-6">
+          <h1 className="text-xl font-black text-white">Edit Report</h1>
 
           <button
             type="button"
             aria-label="Close"
             onClick={onClose}
-            className="rounded-lg p-2 text-white/70 hover:bg-white/5 hover:text-white"
+            className="rounded-lg p-2 text-white/50 transition-colors hover:bg-white/5 hover:text-white"
           >
-            <X className="h-6 w-6" />
+            <X className="h-5 w-5" />
           </button>
         </div>
 
-        <div className="h-px w-full bg-white/10" />
+        <div className="p-8">
+          <div className="space-y-8">
+            <div className="space-y-5">
+              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/45">
+                Item Information
+              </p>
 
-        <div className="px-10 py-8">
-          <div className="text-[12px] font-semibold tracking-widest text-white/55">
-            ITEM INFORMATION
-          </div>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div>
+                  <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                    Item Name / Brand
+                  </label>
+                  <input
+                    value={itemName}
+                    onChange={(e) => setItemName(e.target.value)}
+                    className="w-full rounded-lg border border-white/5 bg-[#0B121E] px-5 py-3 text-sm text-white outline-none transition-colors placeholder:text-white/25 focus:border-[#FF9F1C]/50"
+                  />
+                </div>
 
-          <div className="mt-6 grid gap-6 sm:grid-cols-2">
-            <div>
-              <label className="mb-2 block text-[18px] font-medium text-white/85">
-                Item Name / Brand
-              </label>
-              <input
-                value={itemName}
-                onChange={(e) => setItemName(e.target.value)}
-                className="h-12 w-full rounded-xl bg-[#18263c] px-5 text-[15px] text-white/90 outline-none ring-1 ring-white/10 placeholder:text-white/35 focus:ring-white/20"
-              />
-            </div>
-
-            <div>
-              <label className="mb-2 block text-[18px] font-medium text-white/85">
-                Category
-              </label>
-              <div className="relative">
-                <select
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  className="h-12 w-full appearance-none rounded-xl bg-[#18263c] px-5 pr-12 text-[15px] text-white/90 outline-none ring-1 ring-white/10 focus:ring-white/20"
-                >
-                  {CATEGORIES.map((c) => (
-                    <option key={c} value={c} className="bg-[#18263c]">
-                      {c}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-white/55" />
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6">
-            <label className="mb-2 block text-[18px] font-medium text-white/85">
-              Physical Description
-            </label>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="min-h-32.5 w-full resize-none rounded-xl bg-[#18263c] px-5 py-4 text-[15px] text-white/90 outline-none ring-1 ring-white/10 placeholder:text-white/35 focus:ring-white/20"
-            />
-          </div>
-
-          <div className="mt-10 grid gap-8 md:grid-cols-2">
-            <div>
-              <div className="text-[12px] font-semibold tracking-widest text-white/55">
-                TIME &amp; LOCATION
-              </div>
-
-              <div className="mt-6">
-                <label className="mb-2 block text-[18px] font-medium text-white/85">
-                  Reported Date
-                </label>
-                <input
-                  type="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  className="h-12 w-full rounded-xl bg-[#18263c] px-5 text-[15px] text-white/90 outline-none ring-1 ring-white/10 focus:ring-white/20 scheme-dark"
-                />
-              </div>
-
-              <div className="mt-5">
-                <label className="mb-2 block text-[18px] font-medium text-white/85">
-                  Approximate time
-                </label>
-                <input
-                  type="time"
-                  value={time24}
-                  onChange={(e) => setTime24(e.target.value)}
-                  className="h-12 w-full rounded-xl bg-[#18263c] px-5 text-[15px] text-white/90 outline-none ring-1 ring-white/10 focus:ring-white/20 scheme-dark"
-                />
-              </div>
-
-              <div className="mt-5">
-                <label className="mb-2 block text-[18px] font-medium text-white/85">
-                  Approximate Location
-                </label>
-                <div className="relative">
-                  <select
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    className="h-12 w-full appearance-none rounded-xl bg-[#18263c] px-5 pr-12 text-[15px] text-white/90 outline-none ring-1 ring-white/10 focus:ring-white/20"
-                  >
-                    {LOCATIONS.map((l) => (
-                      <option key={l} value={l} className="bg-[#18263c]">
-                        {l}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-white/55" />
+                <div>
+                  <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                    Category
+                  </label>
+                  <div className="relative">
+                    <select
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                      className="w-full cursor-pointer appearance-none rounded-lg border border-white/5 bg-[#0B121E] px-5 py-3 text-sm text-white outline-none transition-colors focus:border-[#FF9F1C]/50"
+                    >
+                      {CATEGORIES.map((c) => (
+                        <option key={c} value={c} className="bg-[#0B121E]">
+                          {c}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/45" />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div>
-              <div className="text-[12px] font-semibold tracking-widest text-white/55">PHOTO</div>
-
-              <label className="mt-6 flex h-60 cursor-pointer flex-col items-center justify-center rounded-2xl bg-[#18263c] ring-1 ring-white/10 hover:ring-white/20">
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0] ?? null;
-                    setPhotoFile(file);
-                    setPhotoName(file ? file.name : null);
-                  }}
+              <div>
+                <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                  Physical Description
+                </label>
+                <textarea
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  rows={3}
+                  className="w-full resize-none rounded-lg border border-white/5 bg-[#0B121E] px-5 py-3 text-sm text-white outline-none transition-colors placeholder:text-white/25 focus:border-[#FF9F1C]/50"
                 />
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/5 ring-1 ring-white/10">
-                  <ImageIcon className="h-8 w-8 text-white/70" />
-                </div>
-                <div className="mt-4 text-[15px] text-white/70">
-                  {photoName ? photoName : "Click to upload photos"}
-                </div>
-              </label>
+              </div>
             </div>
-          </div>
 
-          <button
-            type="button"
-            onClick={handleUpdate}
-            className="mt-10 h-14 w-full rounded-2xl bg-orange-500 text-[16px] font-semibold text-white shadow-lg shadow-orange-500/20 hover:bg-orange-400"
-          >
-            Update report
-          </button>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="space-y-5">
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/45">
+                  Time &amp; Location
+                </p>
+
+                <div>
+                  <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                    Reported Date
+                  </label>
+                  <input
+                    type="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    className="w-full rounded-lg border border-white/5 bg-[#0B121E] px-5 py-3 text-sm text-white outline-none transition-colors focus:border-[#FF9F1C]/50"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                    Approximate Time
+                  </label>
+                  <input
+                    type="time"
+                    value={time24}
+                    onChange={(e) => setTime24(e.target.value)}
+                    className="w-full rounded-lg border border-white/5 bg-[#0B121E] px-5 py-3 text-sm text-white outline-none transition-colors focus:border-[#FF9F1C]/50"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                    Approximate Location
+                  </label>
+                  <div className="relative">
+                    <select
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
+                      className="w-full cursor-pointer appearance-none rounded-lg border border-white/5 bg-[#0B121E] px-5 py-3 text-sm text-white outline-none transition-colors focus:border-[#FF9F1C]/50"
+                    >
+                      {LOCATIONS.map((l) => (
+                        <option key={l} value={l} className="bg-[#0B121E]">
+                          {l}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/45" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-5">
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/45">Photo</p>
+
+                <label className="flex aspect-square cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-white/10 bg-[#0B121E] transition-colors hover:bg-white/2">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0] ?? null;
+                      setPhotoFile(file);
+                      setPhotoName(file ? file.name : null);
+                    }}
+                  />
+                  <div className="rounded-full bg-white/5 p-4">
+                    <ImageIcon className="h-7 w-7 text-white/40" />
+                  </div>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-white/45">
+                    {photoName ? photoName : "Click to upload photo"}
+                  </p>
+                </label>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleUpdate}
+              className="w-full rounded-xl bg-[#FF9F1C] py-4 text-[11px] font-black uppercase tracking-widest text-black transition-colors hover:bg-[#FF8C00] active:scale-[0.99]"
+            >
+              Update Report
+            </button>
+          </div>
         </div>
       </div>
     </div>
