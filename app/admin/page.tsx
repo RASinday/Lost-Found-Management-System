@@ -359,7 +359,7 @@
               <tbody className="divide-y divide-white/5">
                 {tab === "reports" ? (
                   filteredReports.map((r) => (
-                    <tr key={r.id} className="transition-colors hover:bg-white/[0.02]">
+                    <tr key={r.id} className="transition-colors hover:bg-white/2">
                       <td className="px-8 py-7">
                         <div className="flex items-center gap-4">
                           <div
@@ -398,7 +398,7 @@
                   ))
                 ) : (
                   filteredUsers.map((u) => (
-                    <tr key={u.id} className="transition-colors hover:bg-white/[0.02]">
+                    <tr key={u.id} className="transition-colors hover:bg-white/2">
                       <td className="px-8 py-7">
                         <div className="flex items-center gap-4">
                           <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/5 bg-[#0B121E] text-white">
@@ -524,7 +524,7 @@
 
                 <div
                   onClick={triggerFileInput}
-                  className="group relative flex aspect-square cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-[#0B121E] transition-all hover:border-white/20 hover:bg-white/[0.02]"
+                  className="group relative flex aspect-square cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-[#0B121E] transition-all hover:border-white/20 hover:bg-white/2"
                 >
                   {imagePreview ? (
                     <>
@@ -644,7 +644,7 @@
                   
                   <div
                     onClick={triggerFileInput}
-                    className="group relative flex aspect-square cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-[#0B121E] transition-all hover:border-white/20 hover:bg-white/[0.02]"
+                    className="group relative flex aspect-square cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-[#0B121E] transition-all hover:border-white/20 hover:bg-white/2"
                   >
                     {imagePreview ? (
                       <>
