@@ -51,11 +51,11 @@ export default function ContactPage() {
         </header>
 
         {/* STAFF & OFFICE HOURS SECTION */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-13">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-13 items-stretch">
           
           {/* LEFT: STAFF INFO */}
-          <section className="bg-linear-to-br from-[#1e2b44] to-[#151f2e] rounded-3xl p-8 border border-white/10 shadow-2xl">
-            <h3 className="mb-15 text-[24px] flex items-center gap-2 text-orange-400 font-bold">
+          <section className="h-full bg-linear-to-br from-[#1e2b44] to-[#151f2e] rounded-3xl p-8 border border-white/10 shadow-2xl flex flex-col justify-start">
+            <h3 className="mb-6 text-[24px] flex items-center gap-2 text-orange-400 font-bold">
                <User size={24}/> Lost and Found Coordinator
             </h3>
             <div className="space-y-3">
@@ -73,25 +73,47 @@ export default function ContactPage() {
           </section>
 
           {/* RIGHT: OFFICE HOURS */}
-          <section className="bg-linear-to-br from-[#1e2b44] to-[#151f2e] rounded-3xl p-8 border border-white/10 shadow-2xl flex flex-col justify-center">
-             <div className="mb-3">
-               <h3 className="flex items-center gap-2 text-[24px] text-orange-400 font-bold mb-6">
+          <section className="h-full bg-linear-to-br from-[#1e2b44] to-[#151f2e] rounded-3xl p-8 border border-white/10 shadow-2xl flex flex-col justify-start">
+             <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+               <h3 className="flex items-center gap-2 text-[24px] text-orange-400 font-bold">
                   <Clock className="text-orange-500" size={24}/> Office Hours
                </h3>
-               <span className={`inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full text-[11px] font-bold uppercase tracking-wider ${isOpen ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-red-500/20 text-red-400 border border-red-500/30'}`}>
-                  <span className={`h-2 w-2 rounded-full animate-pulse ${isOpen ? 'bg-green-400' : 'bg-red-400'}`}></span>
-                  {isOpen ? 'Open Now' : 'Currently Closed'}
+
+               <span
+                 className={`inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full text-[11px] font-bold uppercase tracking-wider ${
+                   isOpen
+                     ? "bg-green-500/20 text-green-400 border border-green-500/30"
+                     : "bg-red-500/20 text-red-400 border border-red-500/30"
+                 }`}
+               >
+                  <span className={`h-2 w-2 rounded-full animate-pulse ${isOpen ? "bg-green-400" : "bg-red-400"}`}></span>
+                  {isOpen ? "Open Now" : "Currently Closed"}
                </span>
              </div>
 
              <div className="space-y-3">
-               <div className="bg-[#0a1120] p-6 rounded-2xl border border-white/5 group hover:border-orange-500/30 transition-all cursor-pointer">
-                  <p className="text-gray-500 text-[15px] uppercase tracking-wider mb-2">Monday - Friday</p>
-                  <p className="text-orange-400 font-bold text-[15px]">7:00 AM - 5:00 PM</p>
+               {/* Mon–Fri */}
+               <div className="bg-[#0a1120] p-6 rounded-2xl border border-white/5 group hover:border-orange-500/30 transition-all">
+                  <div className="flex items-center justify-between gap-4">
+                    <p className="text-gray-500 text-[15px] uppercase tracking-widest">
+                      Monday - Friday
+                    </p>
+                    <p className="text-orange-400 font-bold text-[15px] whitespace-nowrap">
+                      7:00 AM - 5:00 PM
+                    </p>
+                  </div>
                </div>
-               <div className="bg-[#0a1120] p-6 rounded-2xl border border-white/5 group hover:border-orange-500/30 transition-all cursor-pointer">
-                  <p className="text-gray-500 text-[15px] uppercase tracking-wider mb-2">Weekend & Holidays</p>
-                  <p className="text-gray-400 font-semibold text-[15px]">Closed</p>
+
+               {/* Weekend & Holidays */}
+               <div className="bg-[#0a1120] p-6 rounded-2xl border border-white/5 group hover:border-orange-500/30 transition-all">
+                  <div className="flex items-center justify-between gap-4">
+                    <p className="text-gray-500 text-[15px] uppercase tracking-widest">
+                      Weekend & Holidays
+                    </p>
+                    <p className="text-gray-400 font-semibold text-[15px] whitespace-nowrap">
+                      Closed
+                    </p>
+                  </div>
                </div>
              </div>
 
@@ -130,9 +152,9 @@ export default function ContactPage() {
              </h3>
              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {[
-                  { src: "/sslg_office.png", title: "Supreme Secondary Learner Government SSLG", description: "Main drop-off point for lost and found items. Located in the administrative area of the school.", tag: "VERIFIED AREA", school: "Hilongos National Vacation School" },
-                  { src: "/guard_jhs.png", title: "Guard House - Junior High School", description: "Secondary drop-off location for items found in the Junior High School section.", tag: "VERIFIED AREA", school: "Hilongos National Vacation School" },
-                  { src: "/guard_shs.png", title: "Guard House - Senior High School", description: "Designated drop-off area for items found in the Senior High School section of the campus.", tag: "VERIFIED AREA", school: "Hilongos National Vacation School" }
+                  { src: "/sslg_office.png", title: "Supreme Secondary Learner Government SSLG", description: "Main drop-off point for lost and found items. Located in the administrative area of the school.", tag: "DROP OFF AREA", school: "Hilongos National Vacation School" },
+                  { src: "/guard_jhs.png", title: "Guard House - Junior High School", description: "Secondary drop-off location for items found in the Junior High School section.", tag: "DROP OFF AREA", school: "Hilongos National Vacation School" },
+                  { src: "/guard_shs.png", title: "Guard House - Senior High School", description: "Designated drop-off area for items found in the Senior High School section of the campus.", tag: "DROP OFF AREA", school: "Hilongos National Vacation School" }
                 ].map((area, idx) => (
                   <div key={idx} className="relative group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-black/40 transition-all hover:border-orange-500/50 hover:shadow-xl hover:shadow-orange-500/20" onClick={() => setSelectedArea(area)}>
                     {/* Image */}
@@ -148,7 +170,9 @@ export default function ContactPage() {
                       <div className="space-y-3">
                         <h4 className="text-[14px] font-bold text-white leading-tight">{area.title}</h4>
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="bg-orange-500 text-black text-[9px] font-bold px-2.5 py-1 rounded uppercase">Verified Area</span>
+                          <span className="bg-orange-500 text-black text-[9px] font-bold px-2.5 py-1 rounded uppercase">
+                            Drop Off Area
+                          </span>
                           <span className="text-[11px] text-gray-300">{area.school}</span>
                         </div>
                       </div>
@@ -163,9 +187,25 @@ export default function ContactPage() {
              <h3 className="mb-8 flex items-center gap-3 text-[24px] text-orange-400 font-bold">
                 <CheckCircle2 className="text-orange-500" size={28}/> Designated Claiming Area
              </h3>
-             <div className="relative group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-black/40 transition-all hover:border-orange-500/50 hover:shadow-xl hover:shadow-orange-500/20" onClick={() => setSelectedArea({ src: "/sslg_adviser.png", title: "Supreme Secondary Learner Government SSLG", description: "Main claiming area for verified and approved lost and found items. Items can be claimed during office hours.", tag: "CLAIMING AREA", school: "Hilongos National Vacation School" })}>
+             <div
+               className="relative group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-black/40 transition-all hover:border-orange-500/50 hover:shadow-xl hover:shadow-orange-500/20"
+               onClick={() =>
+                 setSelectedArea({
+                   src: "/sslg_adviser.png",
+                   title: "SSLG Adviser Room - Richie Benlot", // changed
+                   description:
+                     "Main claiming area for verified and approved lost and found items. Items can be claimed during office hours.",
+                   tag: "CLAIMING AREA",
+                   school: "Hilongos National Vacation School",
+                 })
+               }
+             >
                 <div className="relative aspect-video overflow-hidden">
-                  <img src="/sslg_adviser.png" alt="Claiming" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110" />
+                  <img
+                    src="/sslg_adviser.png"
+                    alt="SSLG Adviser Room - Richie Benlot" // changed
+                    className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
+                  />
                   <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center">
                      <Maximize2 className="text-orange-500" size={32} />
                   </div>
@@ -174,15 +214,23 @@ export default function ContactPage() {
                 {/* Content Overlay */}
                 <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-6">
                   <div>
-                    <h4 className="text-[15px] font-bold text-white mb-3">Supreme Secondary Learner Government SSLG</h4>
+                    <h4 className="text-[15px] font-bold text-white mb-3">
+                      SSLG Adviser Room - Richie Benlot {/* changed */}
+                    </h4>
                     <div className="flex items-center gap-2">
-                      <span className="bg-orange-500 text-black text-[11px] font-bold px-3 py-1.5 rounded uppercase">Claiming Area</span>
-                      <span className="text-[15px] text-gray-300">Hilongos National Vacation School</span>
+                      <span className="bg-orange-500 text-black text-[11px] font-bold px-3 py-1.5 rounded uppercase">
+                        Claiming Area
+                      </span>
+                      <span className="text-[15px] text-gray-300">
+                        Hilongos National Vacation School
+                      </span>
                     </div>
                   </div>
                 </div>
              </div>
-             <p className="text-[14px] text-gray-500 mt-6 italic text-center font-semibold">Closed on Weekends and Public Holidays</p>
+             <p className="text-[14px] text-gray-500 mt-6 italic text-center font-semibold">
+               Closed on Weekends and Public Holidays
+             </p>
           </section>
         </div>
       </div>
