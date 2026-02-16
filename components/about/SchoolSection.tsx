@@ -31,16 +31,16 @@ export default function SchoolSection() {
                 height={24}
                 className="shrink-0 w-5 h-5"
               />
-              <span className="text-[1.0rem] font-semibold tracking-[0.18em] uppercase">
+              <span className="text-[15px] font-semibold tracking-[0.18em] uppercase">
                 Our Institution
               </span>
             </div>
 
-            <h2 className="text-2xl md:text-3xl font-semibold">
+            <h2 className="text-[20px] font-semibold">
               Hilongos National Vocational School
             </h2>
 
-            <p className="mt-4 text-xs md:text-sm leading-relaxed">
+            <p className="mt-4 text-[13px] leading-relaxed">
               The institution supports integrity, responsibility, and digital
               innovation by implementing systems like HNVSearch to improve
               student services and campus management. HNVS is committed to
