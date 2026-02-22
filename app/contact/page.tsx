@@ -55,16 +55,20 @@ export default function ContactPage() {
           
           {/* LEFT: STAFF INFO */}
           <section className="h-full bg-linear-to-br from-[#1e2b44] to-[#151f2e] rounded-3xl p-8 border border-white/10 shadow-2xl flex flex-col justify-start">
-            <h3 className="mb-6 text-[24px] flex items-center gap-2 text-orange-400 font-bold">
-               <User size={24}/> Lost and Found Coordinator
+            <h3 className="mb-6 text-[20px] flex items-center gap-5 text-orange-400 font-bold">
+              <User size={30}/>
+              <span className="flex flex-col">
+                <span>Lost and Found Coordinator</span>
+                <span className="opacity-75">S.Y. 2025 - 2026</span>
+              </span>
             </h3>
             <div className="space-y-3">
               {staff.map((person) => (
-                <div key={person.role} className="group border-b border-white/5 pb-6 last:border-0">
+                <div key={person.role} className="group border-b border-white/5 pb-5 last:border-0">
                   <p className="text-[13px] text-gray-500 uppercase tracking-widest group-hover:text-orange-400/70 transition-colors font-semibold">
                     {person.role}
                   </p>
-                  <p className="text-[20px] font-bold group-hover:text-orange-400 transition-colors duration-300 mt-2">
+                  <p className="text-[20px] font-bold group-hover:text-orange-400 transition-colors duration-300 mt-1">
                     {person.name}
                   </p>
                 </div>
@@ -74,7 +78,7 @@ export default function ContactPage() {
 
           {/* RIGHT: OFFICE HOURS */}
           <section className="h-full bg-linear-to-br from-[#1e2b44] to-[#151f2e] rounded-3xl p-8 border border-white/10 shadow-2xl flex flex-col justify-start">
-             <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+             <div className="mb-13 flex flex-wrap items-center justify-between gap-4">
                <h3 className="flex items-center gap-2 text-[24px] text-orange-400 font-bold">
                   <Clock className="text-orange-500" size={24}/> Office Hours
                </h3>
@@ -93,31 +97,31 @@ export default function ContactPage() {
 
              <div className="space-y-3">
                {/* Mon–Fri */}
-               <div className="bg-[#0a1120] p-6 rounded-2xl border border-white/5 group hover:border-orange-500/30 transition-all">
+               <div className="bg-[#0a1120] p-4 rounded-2xl border border-white/5 group hover:border-orange-500/30 transition-all">
                   <div className="flex items-center justify-between gap-4">
                     <p className="text-gray-500 text-[15px] uppercase tracking-widest">
                       Monday - Friday
                     </p>
-                    <p className="text-orange-400 font-bold text-[15px] whitespace-nowrap">
+                    <p className="text-orange-400 font-bold text-[13px] whitespace-nowrap">
                       7:00 AM - 5:00 PM
                     </p>
                   </div>
                </div>
 
                {/* Weekend & Holidays */}
-               <div className="bg-[#0a1120] p-6 rounded-2xl border border-white/5 group hover:border-orange-500/30 transition-all">
+               <div className="bg-[#0a1120] p-4 rounded-2xl border border-white/5 group hover:border-orange-500/30 transition-all">
                   <div className="flex items-center justify-between gap-4">
                     <p className="text-gray-500 text-[15px] uppercase tracking-widest">
                       Weekend & Holidays
                     </p>
-                    <p className="text-gray-400 font-semibold text-[15px] whitespace-nowrap">
+                    <p className="text-gray-400 font-semibold text-[13px] whitespace-nowrap">
                       Closed
                     </p>
                   </div>
                </div>
              </div>
 
-             <div className="mt-5 space-y-4">
+             <div className="mt-8 space-y-4">
                <div className="flex gap-4 items-start text-[15px] text-gray-400 group hover:text-white transition-colors cursor-pointer">
                   <MapPin size={18} className="text-orange-500 shrink-0 mt-1" />
                   <div>
@@ -152,9 +156,9 @@ export default function ContactPage() {
              </h3>
              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {[
-                  { src: "/sslg_office.png", title: "Supreme Secondary Learner Government SSLG", description: "Main drop-off point for lost and found items. Located in the administrative area of the school.", tag: "DROP OFF AREA", school: "Hilongos National Vacation School" },
-                  { src: "/guard_jhs.png", title: "Guard House - Junior High School", description: "Secondary drop-off location for items found in the Junior High School section.", tag: "DROP OFF AREA", school: "Hilongos National Vacation School" },
-                  { src: "/guard_shs.png", title: "Guard House - Senior High School", description: "Designated drop-off area for items found in the Senior High School section of the campus.", tag: "DROP OFF AREA", school: "Hilongos National Vacation School" }
+                  { src: "/sslg_office.png", title: "Supreme Secondary Learner Government SSLG", description: "Main drop-off point for lost and found items. Located in the administrative area of the school.", tag: "DROP OFF AREA", school: "Hilongos National Vocational School" },
+                  { src: "/guard_jhs.png", title: "Guard House - Junior High School", description: "Secondary drop-off location for items found in the Junior High School section.", tag: "DROP OFF AREA", school: "Hilongos National Vocational School" },
+                  { src: "/guard_shs.png", title: "Guard House - Senior High School", description: "Designated drop-off area for items found in the Senior High School section of the campus.", tag: "DROP OFF AREA", school: "Hilongos National Vocational School" }
                 ].map((area, idx) => (
                   <div key={idx} className="relative group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-black/40 transition-all hover:border-orange-500/50 hover:shadow-xl hover:shadow-orange-500/20" onClick={() => setSelectedArea(area)}>
                     {/* Image */}
@@ -187,43 +191,87 @@ export default function ContactPage() {
              <h3 className="mb-8 flex items-center gap-3 text-[24px] text-orange-400 font-bold">
                 <CheckCircle2 className="text-orange-500" size={28}/> Designated Claiming Area
              </h3>
-             <div
-               className="relative group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-black/40 transition-all hover:border-orange-500/50 hover:shadow-xl hover:shadow-orange-500/20"
-               onClick={() =>
-                 setSelectedArea({
-                   src: "/sslg_adviser.png",
-                   title: "SSLG Adviser Room - Richie Benlot", // changed
-                   description:
-                     "Main claiming area for verified and approved lost and found items. Items can be claimed during office hours.",
-                   tag: "CLAIMING AREA",
-                   school: "Hilongos National Vacation School",
-                 })
-               }
-             >
-                <div className="relative aspect-video overflow-hidden">
-                  <img
-                    src="/sslg_adviser.png"
-                    alt="SSLG Adviser Room - Richie Benlot" // changed
-                    className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center">
-                     <Maximize2 className="text-orange-500" size={32} />
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div
+                  className="relative group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-black/40 transition-all hover:border-orange-500/50 hover:shadow-xl hover:shadow-orange-500/20"
+                  onClick={() =>
+                    setSelectedArea({
+                      src: "/sslg_adviser.png",
+                      title: "SSLG Adviser Room - Richie Benlot",
+                      description:
+                        "Main claiming area for verified and approved lost and found items. Items can be claimed during office hours.",
+                      tag: "CLAIMING AREA",
+                      school: "Hilongos National Vocational School",
+                    })
+                  }
+                >
+                  <div className="relative aspect-video overflow-hidden">
+                    <img
+                      src="/sslg_adviser.png"
+                      alt="SSLG Adviser Room - Richie Benlot"
+                      className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center">
+                      <Maximize2 className="text-orange-500" size={32} />
+                    </div>
+                  </div>
+
+                  {/* Content Overlay */}
+                  <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-6">
+                    <div>
+                      <h4 className="text-[15px] font-bold text-white mb-3">
+                        SSLG Adviser - Richie Benlot - JHS
+                      </h4>
+                      <div className="flex items-center gap-2">
+                        <span className="bg-orange-500 text-black text-[11px] font-bold px-3 py-1.5 rounded uppercase">
+                          Claiming Area
+                        </span>
+                        <span className="text-[15px] text-gray-300">
+                          Hilongos National Vocational School
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                {/* Content Overlay */}
-                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-6">
-                  <div>
-                    <h4 className="text-[15px] font-bold text-white mb-3">
-                      SSLG Adviser Room - Richie Benlot {/* changed */}
-                    </h4>
-                    <div className="flex items-center gap-2">
-                      <span className="bg-orange-500 text-black text-[11px] font-bold px-3 py-1.5 rounded uppercase">
-                        Claiming Area
-                      </span>
-                      <span className="text-[15px] text-gray-300">
-                        Hilongos National Vacation School
-                      </span>
+                <div
+                  className="relative group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-black/40 transition-all hover:border-orange-500/50 hover:shadow-xl hover:shadow-orange-500/20"
+                  onClick={() =>
+                    setSelectedArea({
+                      src: "/sslg_ass_adviser.png",
+                      title: "SSLG Asst. Adviser - Mary Jean Glamayo - SHS",
+                      description:
+                        "Alternate claiming point for verified and approved lost and found items. Items can be claimed during office hours.",
+                      tag: "CLAIMING AREA",
+                      school: "Hilongos National Vocational School",
+                    })
+                  }
+                >
+                  <div className="relative aspect-video overflow-hidden">
+                    <img
+                      src="/sslg_ass_adviser.png"
+                      alt="SSLG Asst. Adviser - Mary Jean Glamayo - SHS"
+                      className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center">
+                      <Maximize2 className="text-orange-500" size={32} />
+                    </div>
+                  </div>
+
+                  {/* Content Overlay */}
+                  <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-6">
+                    <div>
+                      <h4 className="text-[15px] font-bold text-white mb-3">
+                        SSLG Asst. Adviser - Mary Jean Glamayo - SHS
+                      </h4>
+                      <div className="flex items-center gap-2">
+                        <span className="bg-orange-500 text-black text-[11px] font-bold px-3 py-1.5 rounded uppercase">
+                          Claiming Area
+                        </span>
+                        <span className="text-[15px] text-gray-300">
+                          Hilongos National Vocational School
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
