@@ -12,7 +12,7 @@ const SidebarContext = React.createContext<SidebarContextValue | undefined>(
   undefined
 );
 
-function useSidebarContext() {
+export function useSidebarContext() {
   const ctx = React.useContext(SidebarContext);
   if (!ctx) {
     throw new Error("Sidebar components must be used within <SidebarProvider>");
@@ -51,7 +51,7 @@ export const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
     },
     ref
   ) => {
-    const { open } = useSidebarContext();
+    const { open, toggle } = useSidebarContext();
 
     // CLOSED: slide completely to the right
     const offcanvas =
@@ -68,16 +68,27 @@ export const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
         : "relative h-screen w-64";
 
     return (
-      <div
-        ref={ref}
-        className={cn(
-          "flex flex-col bg-[#020817] text-slate-100 border-l border-[#12223b] transition-transform duration-200",
-          variantClasses,
-          offcanvas,
-          className
+      <>
+        {/* Backdrop overlay - only show when sidebar is open */}
+        {open && collapsible === "offcanvas" && (
+          <div
+            className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm transition-opacity"
+            onClick={toggle}
+            aria-hidden="true"
+          />
         )}
-        {...props}
-      />
+        
+        <div
+          ref={ref}
+          className={cn(
+            "flex flex-col bg-[#020817] text-slate-100 border-l border-[#12223b] transition-transform duration-200",
+            variantClasses,
+            offcanvas,
+            className
+          )}
+          {...props}
+        />
+      </>
     );
   }
 );

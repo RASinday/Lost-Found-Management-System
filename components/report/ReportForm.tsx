@@ -144,8 +144,9 @@ export default function ReportFormModal({
 
           <div className="mt-6 grid gap-6 md:grid-cols-2">
             <div>
-              <label className="text-[20px] font-semibold text-white/90">Item Name / Brand</label>
+              <label htmlFor="report-title" className="text-[20px] font-semibold text-white/90">Item Name / Brand</label>
               <input
+                id="report-title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g iPhone 17, Key, Notebook"
@@ -154,8 +155,9 @@ export default function ReportFormModal({
             </div>
 
             <div>
-              <label className="text-[20px] font-semibold text-white/90">Category</label>
+              <label htmlFor="report-category" className="text-[20px] font-semibold text-white/90">Category</label>
               <select
+                id="report-category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 className="mt-3 h-15 w-full rounded-2xl bg-[#0f1f36] px-5 text-[20px] font-medium text-white/90 ring-1 ring-white/15 outline-none focus:ring-2 focus:ring-amber-400/60"
@@ -170,8 +172,9 @@ export default function ReportFormModal({
           </div>
 
           <div className="mt-6">
-            <label className="text-[20px] font-semibold text-white/90">Physical Description</label>
+            <label htmlFor="report-description" className="text-[20px] font-semibold text-white/90">Physical Description</label>
             <textarea
+              id="report-description"
               value={desc}
               onChange={(e) => setDesc(e.target.value)}
               placeholder="Color, size, material, distinguishing marks..."
@@ -187,8 +190,9 @@ export default function ReportFormModal({
               </div>
 
               <div className="mt-6">
-                <label className="text-[20px] font-semibold text-white/90">{dateLabel}</label>
+                <label htmlFor="report-date" className="text-[20px] font-semibold text-white/90">{dateLabel}</label>
                 <input
+                  id="report-date"
                   type="date"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
@@ -197,8 +201,9 @@ export default function ReportFormModal({
               </div>
 
               <div className="mt-6">
-                <label className="text-[20px] font-semibold text-white/90">Approximate time</label>
+                <label htmlFor="report-time" className="text-[20px] font-semibold text-white/90">Approximate time</label>
                 <input
+                  id="report-time"
                   type="time"
                   step="60"
                   value={time}
@@ -208,8 +213,9 @@ export default function ReportFormModal({
               </div>
 
               <div className="mt-6">
-                <label className="text-[20px] font-semibold text-white/90">Approximate Location</label>
+                <label htmlFor="report-location" className="text-[20px] font-semibold text-white/90">Approximate Location</label>
                 <input
+                  id="report-location"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   placeholder="Guard House"
@@ -227,6 +233,7 @@ export default function ReportFormModal({
 
                 <input
                   type="file"
+                  name="report-photo"
                   accept="image/*"
                   className="hidden"
                   onChange={(e) => {

@@ -11,6 +11,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Home, FileText, Info, Mail, LogIn } from "lucide-react";
+import { useSidebarContext } from "@/components/ui/sidebar";
 
 const navLinks = [
   { label: "Home", href: "/home", icon: Home },
@@ -21,6 +22,7 @@ const navLinks = [
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const { toggle } = useSidebarContext();
 
   return (
     <Sidebar
@@ -45,6 +47,7 @@ export function AppSidebar() {
               <SidebarMenuItem key={item.href}>
                 <Link
                   href={item.href}
+                  onClick={toggle}
                   className={`flex w-full items-center gap-3 rounded-md px-3 py-2 text-base font-semibold transition-colors
                     ${
                       isActive
@@ -64,6 +67,7 @@ export function AppSidebar() {
       <SidebarFooter className="border-t border-[#12223b]/50 bg-[#020817] p-3">
         <Link
           href="/login"
+          onClick={toggle}
           className="flex w-full items-center justify-center gap-2 rounded-md bg-orange-500 px-3 py-2 text-base font-semibold text-white hover:bg-orange-600 transition-colors"
         >
           <LogIn className="h-5 w-5" />

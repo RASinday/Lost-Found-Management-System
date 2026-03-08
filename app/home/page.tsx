@@ -44,29 +44,29 @@ export default function HomePage() {
 
         <div className="absolute inset-0 bg-black/20" />
 
-        <main className="relative z-10 flex min-h-[calc(100vh-72px)] items-center justify-center px-4 sm:px-6 lg:px-8">
+        <main className="relative z-10 flex min-h-[calc(100vh-72px)] items-center justify-center px-4 sm:px-6 md:px-8 lg:px-10">
           <div className="mx-auto w-full max-w-6xl text-center">
-            <h1 className="text-5xl sm:text-6xl md:text-[72px] lg:text-[80px] font-semibold leading-none tracking-wide">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[72px] xl:text-[80px] font-semibold leading-none tracking-wide">
               <span className="text-white">HNV</span>
               <span className="text-amber-400">Search</span>
             </h1>
 
-            <p className="mt-5 text-lg sm:text-xl md:text-2xl lg:text-[30px] leading-snug text-white/85 px-4">
+            <p className="mt-4 sm:mt-5 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-[30px] leading-snug text-white/85 px-2 sm:px-4">
               Welcome to HNVS' first ever Web-based Lost-and-found
               <br className="hidden sm:block" />
               Management System
             </p>
 
-            <div className="mt-15 flex justify-center">
+            <div className="mt-10 sm:mt-12 md:mt-15 flex justify-center">
               <Link
                 href="/report"
-                className="inline-flex items-center gap-3 sm:gap-5 rounded-xl bg-[#3d5e93] px-6 sm:px-8 md:px-10 py-3 sm:py-3.5 text-base sm:text-lg md:text-[18px] font-semibold shadow-lg shadow-black/30 transition hover:bg-[#4a6daa]"
+                className="inline-flex items-center gap-2 sm:gap-3 md:gap-5 rounded-lg sm:rounded-xl bg-[#3d5e93] px-5 sm:px-6 md:px-8 lg:px-10 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base md:text-lg lg:text-[18px] font-semibold shadow-lg shadow-black/30 transition hover:bg-[#4a6daa]"
               >
-                Get Started <span className="text-lg sm:text-xl md:text-[22px]">→</span>
+                Get Started <span className="text-base sm:text-lg md:text-xl lg:text-[22px]">→</span>
               </Link>
             </div>
 
-            <p className="mt-55 text-sm sm:text-base md:text-lg lg:text-[22px] xl:text-[25px] leading-6 sm:leading-7 md:leading-8 text-white/75 px-4">
+            <p className="mt-16 sm:mt-32 md:mt-40 lg:mt-55 text-xs sm:text-sm md:text-base lg:text-lg xl:text-[22px] 2xl:text-[25px] leading-5 sm:leading-6 md:leading-7 lg:leading-8 text-white/75 px-2 sm:px-4">
               HNVSearch is designed to help students, teachers, and staff easily
               <br className="hidden md:block" />
               report, search, and recover lost or found items within the school premises.
@@ -80,13 +80,13 @@ export default function HomePage() {
       </div>
 
       {/* ================= OUR PURPOSE SECTION ================= */}
-      <section className="w-full bg-[#2f4b78] py-10 text-white">
+      <section className="w-full bg-[#2f4b78] py-8 sm:py-10 md:py-12 text-white">
         <div className="mx-auto w-full max-w-500 px-4 sm:px-6 md:px-8 lg:px-10">
-          <h2 className="mb-8 sm:mb-10 md:mb-12 text-center text-2xl sm:text-3xl md:text-[35px] font-semibold">
+          <h2 className="mb-6 sm:mb-8 md:mb-10 lg:mb-12 text-center text-xl sm:text-2xl md:text-3xl lg:text-[35px] font-semibold">
             OUR PURPOSE
           </h2>
 
-          <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-4 md:gap-10">
+          <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 md:gap-8 lg:grid-cols-4 lg:gap-10">
             {purposeItems.map((item) => (
               <PurposeCard
                 key={item.title}

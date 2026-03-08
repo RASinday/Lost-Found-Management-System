@@ -27,12 +27,14 @@ function ErrorBanner({ message }: { message: string }) {
 function FieldLabel({
   icon,
   text,
+  htmlFor,
 }: {
   icon: React.ReactNode;
   text: string;
+  htmlFor: string;
 }) {
   return (
-    <label className="mb-2 flex items-center gap-2 text-l text-white/90">
+    <label htmlFor={htmlFor} className="mb-2 flex items-center gap-2 text-l text-white/90">
       <span aria-hidden className="text-white/90">
         {icon}
       </span>
@@ -119,8 +121,10 @@ export default function SignupPage() {
           <FieldLabel
             icon={<User size={14} color="orange" />}
             text="Username"
+            htmlFor="signup-username"
           />
           <input
+            id="signup-username"
             type="text"
             placeholder="Enter your password"
             value={username}
@@ -135,8 +139,10 @@ export default function SignupPage() {
           <FieldLabel
             icon={<Lock size={14} color="orange" />}
             text="Password"
+            htmlFor="signup-password"
           />
           <input
+            id="signup-password"
             type="password"
             placeholder="Create password"
             value={password}
@@ -148,7 +154,13 @@ export default function SignupPage() {
           <ErrorBanner message={errors.password} />
 
           {/* Confirm Password */}
+          <FieldLabel
+            icon={<Lock size={14} color="orange" />}
+            text="Confirm Password"
+            htmlFor="signup-confirm-password"
+          />
           <input
+            id="signup-confirm-password"
             type="password"
             placeholder="Confirm password"
             value={confirmPassword}

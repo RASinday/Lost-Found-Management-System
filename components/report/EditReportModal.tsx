@@ -224,35 +224,36 @@ export default function EditReportModal({
 
   return (
     <div className="fixed inset-0 z-500 flex items-center justify-center p-4">
-      <button className="absolute inset-0 bg-black/70" onClick={onClose} aria-label="Close edit modal" />
+      <button className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} aria-label="Close edit modal" />
 
-      <div className="relative z-501 w-full max-w-2xl overflow-hidden rounded-2xl border border-white/10 bg-[#151F2E]">
-        <div className="flex items-center justify-between border-b border-white/5 p-6">
-          <h1 className="text-xl font-black text-white">Edit Report</h1>
+      <div className="relative z-501 w-full max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden rounded-xl sm:rounded-2xl border border-white/10 bg-[#151F2E] flex flex-col">
+        <div className="flex items-center justify-between border-b border-white/5 p-4 sm:p-6 shrink-0">
+          <h1 className="text-lg sm:text-xl font-black text-white">Edit Report</h1>
 
           <button
             type="button"
             aria-label="Close"
             onClick={onClose}
-            className="rounded-lg p-2 text-white/50 transition-colors hover:bg-white/5 hover:text-white"
+            className="rounded-lg p-1.5 sm:p-2 bg-black/40 sm:bg-transparent text-white/80 sm:text-white/50 transition-colors hover:bg-white/5 hover:text-white"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        <div className="p-8">
-          <div className="space-y-8">
-            <div className="space-y-5">
-              <p className="text-[15px] font-black text-white/45">
+        <div className="overflow-y-auto p-5 sm:p-8">
+          <div className="space-y-6 sm:space-y-8">
+            <div className="space-y-4 sm:space-y-5">
+              <p className="text-[13px] sm:text-[15px] font-black text-white/45">
                 ITEM INFORMATION
               </p>
 
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
-                  <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                  <label htmlFor="edit-item-name" className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
                     Item Name / Brand
                   </label>
                   <input
+                    id="edit-item-name"
                     value={itemName}
                     onChange={(e) => setItemName(e.target.value)}
                     className="w-full rounded-lg border border-white/5 bg-[#0B121E] px-5 py-3 text-sm text-white outline-none transition-colors placeholder:text-white/25 focus:border-[#FF9F1C]/50"
@@ -260,11 +261,12 @@ export default function EditReportModal({
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                  <label htmlFor="edit-category" className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
                     Category
                   </label>
                   <div className="relative">
                     <select
+                      id="edit-category"
                       value={category}
                       onChange={(e) => setCategory(e.target.value)}
                       className="w-full cursor-pointer appearance-none rounded-lg border border-white/5 bg-[#0B121E] px-5 py-3 text-sm text-white outline-none transition-colors focus:border-[#FF9F1C]/50"
@@ -281,10 +283,11 @@ export default function EditReportModal({
               </div>
 
               <div>
-                <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                <label htmlFor="edit-description" className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
                   Physical Description
                 </label>
                 <textarea
+                  id="edit-description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   rows={3}
@@ -300,10 +303,11 @@ export default function EditReportModal({
                 </p>
 
                 <div>
-                  <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                  <label htmlFor="edit-date" className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
                     Reported Date
                   </label>
                   <input
+                    id="edit-date"
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
@@ -312,10 +316,11 @@ export default function EditReportModal({
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                  <label htmlFor="edit-time" className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
                     Approximate Time
                   </label>
                   <input
+                    id="edit-time"
                     type="time"
                     value={time24}
                     onChange={(e) => setTime24(e.target.value)}
@@ -324,11 +329,12 @@ export default function EditReportModal({
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                  <label htmlFor="edit-location" className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
                     Approximate Location
                   </label>
                   <div className="relative">
                     <select
+                      id="edit-location"
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}
                       className="w-full cursor-pointer appearance-none rounded-lg border border-white/5 bg-[#0B121E] px-5 py-3 text-sm text-white outline-none transition-colors focus:border-[#FF9F1C]/50"
@@ -350,6 +356,7 @@ export default function EditReportModal({
                 <label className="flex aspect-square cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-white/10 bg-[#0B121E] transition-colors hover:bg-white/2">
                   <input
                     type="file"
+                    name="edit-report-photo"
                     accept="image/*"
                     className="hidden"
                     onChange={(e) => {
@@ -371,7 +378,7 @@ export default function EditReportModal({
             <button
               type="button"
               onClick={handleUpdate}
-              className="w-full rounded-xl bg-[#FF9F1C] py-4 text-[11px] font-black uppercase tracking-widest text-black transition-colors hover:bg-[#FF8C00] active:scale-[0.99]"
+              className="w-full rounded-lg sm:rounded-xl bg-[#FF9F1C] py-3 sm:py-4 text-[11px] font-black uppercase tracking-widest text-black transition-colors hover:bg-[#FF8C00] active:scale-[0.99]"
             >
               Update Report
             </button>

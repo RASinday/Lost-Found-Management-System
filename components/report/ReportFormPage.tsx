@@ -253,54 +253,66 @@ export default function ReportFormPage({
   }
 
   return (
-    <div className="relative min-h-screen bg-[#07121f] text-white">
+    <div className="fixed inset-0 z-200 overflow-y-auto">
+      {/* Background effects */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(1200px_700px_at_50%_0%,rgba(59,130,246,0.10),transparent_65%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(900px_600px_at_0%_60%,rgba(249,115,22,0.10),transparent_60%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(900px_600px_at_100%_55%,rgba(34,197,94,0.08),transparent_60%)]" />
       </div>
 
-      <div className="absolute inset-0 bg-black/55 backdrop-blur-md" />
+      {/* Backdrop - clickable to close */}
+      <button
+        className="absolute inset-0 bg-black/70 backdrop-blur-md cursor-default"
+        onClick={() => router.push("/report")}
+        aria-label="Close form"
+      />
 
-      <main className="relative z-10 flex min-h-screen items-center justify-center p-4 py-10">
-        <div className="w-full max-w-2xl overflow-hidden rounded-2xl border border-white/10 bg-[#151F2E]">
-          <div className="flex items-start justify-between border-b border-white/5 p-6">
+      {/* Centered container */}
+      <div className="relative z-10 flex min-h-screen items-center justify-center p-3 sm:p-4 md:p-6 py-8 sm:py-10">
+        {/* Floating card - click events don't propagate to backdrop */}
+        <div 
+          className="w-full max-w-2xl overflow-hidden rounded-xl sm:rounded-2xl border border-white/10 bg-linear-to-br from-[#1e2b44] to-[#151f2e] shadow-2xl animate-in fade-in zoom-in duration-200"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="flex items-start justify-between border-b border-white/5 p-4 sm:p-6">
             <div>
               <button
                 type="button"
                 onClick={() => setIsTypeModalOpen(true)}
-                className="text-[13px] font-black uppercase tracking-widest text-[#FF9F1C] hover:text-[#FF8C00]"
+                className="text-[11px] sm:text-[13px] font-black uppercase tracking-widest text-[#FF9F1C] hover:text-[#FF8C00] transition-colors"
               >
-                <MoveLeft className="mr-2 inline-block h-4 w-4" />
+                <MoveLeft className="mr-1.5 sm:mr-2 inline-block h-3 w-3 sm:h-4 sm:w-4" />
                 CHANGE TYPE
               </button>
 
-              <h1 className="mt-3 text-xl font-black text-white">{title}</h1>
+              <h1 className="mt-2 sm:mt-3 text-lg sm:text-xl font-black text-white">{title}</h1>
             </div>
 
             <button
               type="button"
               aria-label="Close"
               onClick={() => router.push("/report")}
-              className="rounded-lg p-2 text-white/50 transition-colors hover:bg-white/5 hover:text-white"
+              className="rounded-lg p-1.5 sm:p-2 bg-black/40 sm:bg-transparent text-white/80 sm:text-white/50 transition-colors hover:bg-white/5 hover:text-white"
             >
               <X className="h-5 w-5" />
             </button>
           </div>
 
-          <div className="p-8">
-            <form onSubmit={onSubmit} className="space-y-8">
-              <div className="space-y-5">
-                <p className="text-[15px] font-black text-white/45">
+          <div className="p-5 sm:p-6 md:p-8 max-h-[calc(100vh-160px)] overflow-y-auto">
+            <form onSubmit={onSubmit} className="space-y-6 sm:space-y-8">
+              <div className="space-y-4 sm:space-y-5">
+                <p className="text-[13px] sm:text-[15px] font-black text-white/45">
                   Item Information
                 </p>
 
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <div>
-                    <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                    <label htmlFor="report-page-item-name" className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
                       Item Name / Brand
                     </label>
                     <input
+                      id="report-page-item-name"
                       value={itemName}
                       onChange={(e) => setItemName(e.target.value)}
                       placeholder="e.g iPhone, Key, Notebook"
@@ -309,11 +321,12 @@ export default function ReportFormPage({
                   </div>
 
                   <div>
-                    <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                    <label htmlFor="report-page-category" className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
                       Category
                     </label>
                     <div className="relative">
                       <select
+                        id="report-page-category"
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
                         className="w-full cursor-pointer appearance-none rounded-lg border border-white/5 bg-[#0B121E] px-5 py-3 text-sm text-white outline-none transition-colors focus:border-[#FF9F1C]/50"
@@ -330,10 +343,11 @@ export default function ReportFormPage({
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                  <label htmlFor="report-page-description" className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
                     Physical Description
                   </label>
                   <textarea
+                    id="report-page-description"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Color, size, material, distinguishing marks..."
@@ -344,16 +358,17 @@ export default function ReportFormPage({
               </div>
 
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div className="space-y-5">
+                <div className="space-y-4 sm:space-y-5">
                   <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/45">
                     Time &amp; Location
                   </p>
 
                   <div>
-                    <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                    <label htmlFor="report-page-date" className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
                       {dateLabel}
                     </label>
                     <input
+                      id="report-page-date"
                       type="date"
                       value={date}
                       onChange={(e) => setDate(e.target.value)}
@@ -362,10 +377,11 @@ export default function ReportFormPage({
                   </div>
 
                   <div>
-                    <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                    <label htmlFor="report-page-time" className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
                       {timeLabel}
                     </label>
                     <input
+                      id="report-page-time"
                       type="time"
                       value={time}
                       onChange={(e) => setTime(e.target.value)}
@@ -374,11 +390,12 @@ export default function ReportFormPage({
                   </div>
 
                   <div>
-                    <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+                    <label htmlFor="report-page-location" className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
                       Approximate Location
                     </label>
                     <div className="relative">
                       <select
+                        id="report-page-location"
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
                         className="w-full cursor-pointer appearance-none rounded-lg border border-white/5 bg-[#0B121E] px-5 py-3 text-sm text-white outline-none transition-colors focus:border-[#FF9F1C]/50"
@@ -400,6 +417,7 @@ export default function ReportFormPage({
                   <label className="flex aspect-square cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-white/10 bg-[#0B121E] transition-colors hover:bg-white/2">
                     <input
                       type="file"
+                      name="report-page-photo"
                       accept="image/*"
                       className="hidden"
                       onChange={(e) => {
@@ -419,21 +437,21 @@ export default function ReportFormPage({
               </div>
 
               {error && (
-                <div className="rounded-lg bg-red-500/10 px-5 py-3 text-sm text-red-200 ring-1 ring-red-500/30">
+                <div className="rounded-lg bg-red-500/10 px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm text-red-200 ring-1 ring-red-500/30">
                   {error}
                 </div>
               )}
 
               <button
                 type="submit"
-                className="w-full rounded-xl bg-[#FF9F1C] py-4 text-[11px] font-black uppercase tracking-widest text-black transition-colors hover:bg-[#FF8C00] active:scale-[0.99]"
+                className="w-full rounded-lg sm:rounded-xl bg-[#FF9F1C] py-3 sm:py-4 text-[11px] font-black uppercase tracking-widest text-black transition-all hover:bg-[#FF8C00] active:scale-[0.98] shadow-lg shadow-orange-500/20"
               >
                 {isEdit ? "Update Report" : "Submit Report"}
               </button>
             </form>
           </div>
         </div>
-      </main>
+      </div>
 
       <ReportTypeModal
         open={isTypeModalOpen}

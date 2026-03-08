@@ -80,6 +80,8 @@ export default function ForgotPasswordPage() {
             <div className="flex items-center gap-2 rounded-md bg-[#E5E7EB] px-3">
               <Mail size={14} className="text-slate-700" />
               <input
+                id="forgot-password-email"
+                name="email"
                 type="text"
                 placeholder="Email Address"
                 value={email}

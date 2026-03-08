@@ -1,9 +1,11 @@
 import ReportFormPage from "@/components/report/ReportFormPage";
 
-export default function LostReportPage({
+export default async function LostReportPage({
   searchParams,
 }: {
-  searchParams?: { edit?: string };
+  searchParams: Promise<{ edit?: string }>;
 }) {
-  return <ReportFormPage type="lost" editId={searchParams?.edit} />;
+  const params = await searchParams;
+
+  return <ReportFormPage type="lost" editId={params?.edit} />;
 }

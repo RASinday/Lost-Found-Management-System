@@ -46,6 +46,8 @@ export default function DatePickerTime({
   layout = "stack",
 }: Props) {
   const [open, setOpen] = React.useState(false);
+  const dateFieldId = React.useId();
+  const timeFieldId = React.useId();
 
   const wrapper = layout === "row" ? "grid grid-cols-2 gap-6" : "space-y-8";
 
@@ -57,12 +59,13 @@ export default function DatePickerTime({
     <div className={wrapper}>
       {/* Date */}
       <div>
-        <label className={labelClass}>{dateLabel}</label>
+        <label htmlFor={dateFieldId} className={labelClass}>{dateLabel}</label>
 
         <div className="mt-3">
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <Button
+                id={dateFieldId}
                 type="button"
                 variant="outline"
                 className={[
@@ -123,9 +126,10 @@ export default function DatePickerTime({
 
       {/* Time */}
       <div>
-      <label className={labelClass}>{timeLabel}</label>
+      <label htmlFor={timeFieldId} className={labelClass}>{timeLabel}</label>
 
       <Input
+        id={timeFieldId}
          type="time"
          step="60"
          value={time}

@@ -260,6 +260,7 @@
                 <div className="relative w-full max-w-sm">
                   <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/35" size={16} />
                   <input
+                    name="admin-search"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder={`Search ${tab === "reports" ? "reports" : "users"}...`}
@@ -270,6 +271,7 @@
                 {tab === "reports" ? (
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                   <select
+                    name="admin-report-type-filter"
                     value={reportTypeFilter}
                     onChange={(e) => setReportTypeFilter(e.target.value as any)}
                     className="rounded-lg border border-white/5 bg-[#0B121E] px-4 py-3 text-[11px] font-black uppercase tracking-wider text-white/60 outline-none hover:text-white focus:border-[#FF9F1C]/50"
@@ -280,6 +282,7 @@
                   </select>
 
                   <select
+                    name="admin-report-status-filter"
                     value={reportStatusFilter}
                     onChange={(e) => setReportStatusFilter(e.target.value as any)}
                     className="rounded-lg border border-white/5 bg-[#0B121E] px-4 py-3 text-[11px] font-black uppercase tracking-wider text-white/60 outline-none hover:text-white focus:border-[#FF9F1C]/50"
@@ -294,6 +297,7 @@
               ) : (
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                   <select
+                    name="admin-user-role-filter"
                     value={userRoleFilter}
                     onChange={(e) => setUserRoleFilter(e.target.value)}
                     className="rounded-lg border border-white/5 bg-[#0B121E] px-4 py-3 text-[11px] font-black uppercase tracking-wider text-white/60 outline-none hover:text-white focus:border-[#FF9F1C]/50"
@@ -307,6 +311,7 @@
                   </select>
 
                   <select
+                    name="admin-user-status-filter"
                     value={userStatusFilter}
                     onChange={(e) => setUserStatusFilter(e.target.value as any)}
                     className="rounded-lg border border-white/5 bg-[#0B121E] px-4 py-3 text-[11px] font-black uppercase tracking-wider text-white/60 outline-none hover:text-white focus:border-[#FF9F1C]/50"
@@ -712,6 +717,7 @@
           open={openAddUser}
           onClose={() => setOpenAddUser(false)}
           width="max-w-lg"
+          mobileAlign="center"
         >
           <form className="space-y-5" onSubmit={addUser}>
             <TextField label="Full Name" name="name" required placeholder="Enter name" />
@@ -733,6 +739,7 @@
           open={!!editUser}
           onClose={() => setEditUser(null)}
           width="max-w-lg"
+          mobileAlign="center"
         >
           {editUser ? (
             <form className="space-y-6" onSubmit={updateUser}>

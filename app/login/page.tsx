@@ -50,31 +50,32 @@ export default function LoginPage() {
       <div className="absolute inset-0 bg-black/45" />
 
       {/* Centered card */}
-      <div className="relative z-10 flex min-h-screen items-center justify-center px-4">
-        <div className="w-full max-w-md rounded-lg bg-[#2f4a79] px-10 py-10 shadow-2xl">
+      <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-8">
+        <div className="w-full max-w-md rounded-lg sm:rounded-xl bg-[#2f4a79] px-6 sm:px-8 md:px-10 py-8 sm:py-10 shadow-2xl">
           {/* Logo */}
           <div className="mb-1 flex justify-center">
             <Image
               src="/HNVSearchLogo.png"
               alt="Logo"
-              width={112}
-              height={112}
-              className="object-contain"
+              width={96}
+              height={96}
+              className="object-contain sm:w-28 sm:h-28"
             />
           </div>
 
-          <h1 className="mb-6 text-center text-xl font-light text-white/90">
+          <h1 className="mb-5 sm:mb-6 text-center text-lg sm:text-xl font-light text-white/90">
             Login to your account
           </h1>
 
           {/* Username */}
-          <label className="mb-2 flex items-center gap-2 text-l text-white/90">
+          <label htmlFor="login-username" className="mb-2 flex items-center gap-2 text-l text-white/90">
             <span aria-hidden className="text-white/90">
               <User size={14} color="orange"/>
             </span>
             Username
           </label>
           <input
+            id="login-username"
             type="text"
             placeholder="Enter your username"
             value={username}
@@ -92,7 +93,7 @@ export default function LoginPage() {
           {!errors.username && <div className="mb-4"></div>}
 
           {/* Password */}
-          <label className="mb-2 flex items-center gap-2 text-l text-white/90">
+          <label htmlFor="login-password" className="mb-2 flex items-center gap-2 text-l text-white/90">
             <span aria-hidden className="text-white/90">
               <Lock size={14} color="orange"/>
             </span>
@@ -100,6 +101,7 @@ export default function LoginPage() {
           </label>
           <div className="relative mb-1">
             <input
+              id="login-password"
               type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
               value={password}
@@ -127,8 +129,9 @@ export default function LoginPage() {
 
           {/* Remember / Forgot */}
           <div className="mb-5 flex items-center justify-between text-l text-white/85">
-            <label className="flex items-center gap-2">
+            <label htmlFor="login-remember" className="flex items-center gap-2">
               <input
+                id="login-remember"
                 type="checkbox"
                 className="h-3.5 w-3.5 rounded border-white/30"
               />

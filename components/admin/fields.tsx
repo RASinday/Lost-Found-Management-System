@@ -22,10 +22,11 @@ export function TextField({
 }) {
   return (
     <div>
-      <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+      <label htmlFor={name} className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
         {label}
       </label>
       <input
+        id={name}
         name={name}
         type={type}
         required={required}
@@ -52,10 +53,11 @@ export function TextArea({
 }) {
   return (
     <div>
-      <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+      <label htmlFor={name} className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
         {label}
       </label>
       <textarea
+        id={name}
         name={name}
         rows={rows}
         defaultValue={defaultValue}
@@ -79,11 +81,12 @@ export function SelectField({
 }) {
   return (
     <div>
-      <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+      <label htmlFor={name} className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-white/50">
         {label}
       </label>
       <div className="relative">
         <select
+          id={name}
           name={name}
           defaultValue={defaultValue || ""}
           className={cx(
